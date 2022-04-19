@@ -13,7 +13,7 @@ class RunRobot:
         rospy.loginfo("To stop TurtleBot CTRL + C")
 
         # What function to call when you ctrl + c
-        rospy.on_shutdown(self.shutdown)
+        rospy.on_shutdown(self.terminate)
 
         # Create a publisher which can "talk" to TurtleBot and tell it to move
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
@@ -21,24 +21,27 @@ class RunRobot:
         # TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         self.r = rospy.Rate(10)
 
-        # Twist for moving straight
-        self.move_cmd_straight = Twist()
-        self.move_cmd_straight.linear.x = 0.2
-        self.move_cmd_straight.angular.z = 0
+
 
     def move_forward_handler(self, System_state):
         newState = "move_forward"
         transition = None
         if rospy.is_shutdown():
             return "end_state", System_state, "finishhh"
+
+        move_cmd_straight = Twist()
+        move_cmd_straight.linear.x = 0.2
+        move_cmd_straight.angular.z = 0
+        r = rospy.Rate(10)
+
         # publish the velocity
-        self.cmd_vel.publish(self.move_cmd_straight)
+        self.cmd_vel.publish(move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
-        self.r.sleep()
+        r.sleep()
 
         return newState, System_state, transition
 
-    def shutdown(self):
+    def terminate(self):
         # stop turtlebot
         rospy.loginfo("Stop TurtleBot")
         # a default Twist has linear.x of 0 and angular.z of 0.  So it'll stop TurtleBot
@@ -56,7 +59,7 @@ class RunRobot:
         # m.add_state("cool_off_delay", cool_off_delay_handler)
         # m.add_state("cool_on_delay", cool_on_delay_handler)
 
-        m.add_state("End_state", self.shutdown, end_state=1)
+        m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
 
         system_state = [4, 0]  # first argument for number of cycles(*2), second for delay variable
