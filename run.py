@@ -36,6 +36,7 @@ class RunRobot:
         r = rospy.Rate(10)
 
         # publish the velocity
+        self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.cmd_vel.publish(move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
         r.sleep()
@@ -68,7 +69,7 @@ class RunRobot:
 
         rospy.loginfo('starting_the_plan_2')
 
-        system_state = [4, 0]  # first argument for number of cycles(*2), second for delay variable
+        system_state = [4]  # first argument for number of cycles(*2), second for delay variable
         m.run(system_state)
 
 
