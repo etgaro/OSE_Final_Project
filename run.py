@@ -46,15 +46,18 @@ class RunRobot:
         self.cmd_vel.publish(Twist())
         # sleep just makes sure TurtleBot receives the stop command prior to shutting down the script
         rospy.sleep(1)
+        rospy.loginfo("\r")
+        rospy.loginfo("\r Done")
+        return "End_State", ""
 
-    if __name__ == '__main__':
+    def start_the_plan(self):
         m = StateMachine()
-        m.add_state("move_forward", move_forward_handler)
+        m.add_state("move_forward", self.move_forward_handler)
         # m.add_state("Cool_on", cool_on_handler)
         # m.add_state("cool_off_delay", cool_off_delay_handler)
         # m.add_state("cool_on_delay", cool_on_delay_handler)
 
-        m.add_state("End_state", shutdown, end_state=1)
+        m.add_state("End_state", self.shutdown, end_state=1)
         m.set_start("move_forward")
 
         system_state = [4, 0]  # first argument for number of cycles(*2), second for delay variable
@@ -143,7 +146,7 @@ class RunRobot:
 #     return newState, System_state, transition
 #
 
-def end_state(txt):
-    rospy.loginfo("\r")
-    rospy.loginfo("\r Done")
-    return "End_State", ""
+if __name__ == '__main__':
+    rospy.loginfo('Main')
+    robot = RunRobot()
+    robot.start_the_plan()
