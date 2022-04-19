@@ -29,6 +29,7 @@ class RunRobot:
         if rospy.is_shutdown():
             return "end_state", System_state, "finishhh"
 
+        rospy.loginfo("moving")
         move_cmd_straight = Twist()
         move_cmd_straight.linear.x = 0.2
         move_cmd_straight.angular.z = 0
