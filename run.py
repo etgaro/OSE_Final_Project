@@ -11,16 +11,10 @@ class RunRobot:
 
         # tell user how to stop TurtleBot
         rospy.loginfo("To stop TurtleBot CTRL + C")
-
-        # What function to call when you ctrl + c
         rospy.on_shutdown(self.terminate)
 
         # Create a publisher which can "talk" to TurtleBot and tell it to move
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
-
-        # TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
-        self.r = rospy.Rate(10)
-
 
 
     def move_forward_handler(self, System_state):
