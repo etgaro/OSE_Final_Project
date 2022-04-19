@@ -8,7 +8,6 @@ from geometry_msgs.msg import Twist
 class RunRobot:
     def __init__(self):
         # initialize
-        rospy.init_node('turtle_in_field', anonymous=False)
 
         # tell user how to stop TurtleBot
         rospy.loginfo("To stop TurtleBot CTRL + C")
@@ -27,7 +26,7 @@ class RunRobot:
         self.move_cmd_straight.linear.x = 0.2
         self.move_cmd_straight.angular.z = 0
 
-    def move_forward_handler(self, System_state, transition):
+    def move_forward_handler(self, System_state):
         newState = "move_forward"
         transition = None
         if rospy.is_shutdown():
@@ -147,6 +146,7 @@ class RunRobot:
 #
 
 if __name__ == '__main__':
+    rospy.init_node('turtle_in_field', anonymous=False)
     rospy.loginfo('Main')
     robot = RunRobot()
     robot.start_the_plan()
