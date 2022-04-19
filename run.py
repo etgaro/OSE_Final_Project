@@ -54,6 +54,9 @@ class RunRobot:
 
     def start_the_plan(self):
         m = StateMachine()
+
+        rospy.loginfo('starting_the_plan')
+
         m.add_state("move_forward", self.move_forward_handler)
         # m.add_state("Cool_on", cool_on_handler)
         # m.add_state("cool_off_delay", cool_off_delay_handler)
@@ -61,6 +64,8 @@ class RunRobot:
 
         m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
+
+        rospy.loginfo('starting_the_plan_2')
 
         system_state = [4, 0]  # first argument for number of cycles(*2), second for delay variable
         m.run(system_state)
@@ -152,4 +157,6 @@ if __name__ == '__main__':
     rospy.init_node('turtle_in_field', anonymous=False)
     rospy.loginfo('Main')
     robot = RunRobot()
+    rospy.loginfo('Main_2')
+
     robot.start_the_plan()
