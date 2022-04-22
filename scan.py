@@ -11,9 +11,7 @@ def callback(msg):
 rospy.init_node('scan_values')
 sub = rospy.Subscriber('/scan', LaserScan, callback)
 
-ranges = callback()
-
-for angle in range(0,len(ranges)-1):
-    print("angle is {}  --  distance is {}".format(angle, ranges[angle]))
+for angle in range(0,len(sub)-1):
+    print("angle is {}  --  distance is {}".format(angle, sub[angle]))
 rospy.spin()
 
