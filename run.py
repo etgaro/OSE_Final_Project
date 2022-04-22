@@ -16,6 +16,11 @@ class RunRobot:
         # Create a publisher which can "talk" to TurtleBot and tell it to move
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
+        self.move_cmd_straight = Twist()
+        self.move_cmd_straight.linear.x = 0.2
+        self.move_cmd_straight.angular.z = 0
+        self.r = rospy.Rate(10)
+
 
     def move_forward_handler(self, System_state):
         newState = "move_forward"
@@ -24,16 +29,13 @@ class RunRobot:
             return "end_state", System_state, "finishhh"
 
         rospy.loginfo("moving")
-        move_cmd_straight = Twist()
-        move_cmd_straight.linear.x = 0.2
-        move_cmd_straight.angular.z = 0
-        r = rospy.Rate(10)
+
 
         # publish the velocity
-        self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
-        self.cmd_vel.publish(move_cmd_straight)
+        #self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
-        r.sleep()
+        self.r.sleep()
 
         return newState, System_state, transition
 
