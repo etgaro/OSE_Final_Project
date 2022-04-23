@@ -90,7 +90,7 @@ if __name__ == '__main__':
     scanner = scanner()
 
 
-    while True:
+    while True and not rospy.on_shutdown:
         time.sleep(1)
         data = scanner.get_scan_data()
         rospy.loginfo(data)
