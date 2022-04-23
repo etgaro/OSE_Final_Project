@@ -1,8 +1,10 @@
 from State_Machine import StateMachine
+from scan import scanner
 from random import random
 import time
 import rospy
 from geometry_msgs.msg import Twist
+
 
 
 class RunRobot:
@@ -155,6 +157,6 @@ if __name__ == '__main__':
     rospy.init_node('turtle_in_field', anonymous=False)
     rospy.loginfo('Main')
     robot = RunRobot()
-    rospy.loginfo('Main_2')
-
+    scanner = scanner()
+    print(scanner.callback())
     robot.start_the_plan()
