@@ -89,11 +89,12 @@ if __name__ == '__main__':
     rospy.loginfo('robotrunned')
     scanner = scanner()
 
+    # just to understand what happand!
     count = 0
     while True:
         time.sleep(1)
         data = scanner.get_scan_data()
-        rospy.loginfo(data)
+        rospy.loginfo(len(data))
         count+=1
         if count == 10:
             break
