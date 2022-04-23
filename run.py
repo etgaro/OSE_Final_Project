@@ -4,6 +4,8 @@ from random import random
 import time
 import rospy
 from geometry_msgs.msg import Twist
+from sensor_msgs.msg import LaserScan
+
 
 
 
@@ -18,10 +20,21 @@ class RunRobot:
         # Create a publisher which can "talk" to TurtleBot and tell it to move
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
+
+        # Create a Subscriber which can "listen" to TurtleBot scan
+
+        def callback(msg):
+            global scan_data
+            scan_data = msg
+
+        self.sub = rospy.Subscriber('/scan', LaserScan, callback)
+
+
         self.move_cmd_straight = Twist()
         self.move_cmd_straight.linear.x = 0.2
         self.move_cmd_straight.angular.z = 0
         self.r = rospy.Rate(10)
+
 
 
     def move_forward_handler(self, System_state):
@@ -71,92 +84,13 @@ class RunRobot:
         m.run(system_state)
 
 
-# handler for AC turned off
-# def cool_off_handler(System_state):
-#     temp = 10 + 20 * random()
-#     print("AC is OFF: ", "temp is", "%.2f" % temp, "cycle ", int((4-System_state[0])/2)+1)
-#     time.sleep(1)
-#     transition = None
-#     if System_state[0] < 1: # end the simulation
-#         newState = "End_state"
-#     else:
-#         if temp >= 20:
-#             System_state[0] = System_state[0] - 1
-#             newState = "cool_on_delay"
-#             transition = "  Cool = on (with delay)"
-#         else:
-#             newState = "Cool_Off"
-#     return newState, System_state, transition
-#
-# # handler for AC turned on
-# def cool_on_handler(System_state):
-#     temp = 10 + 20 * random()
-#     print("AC is ON: ", "temp is", "%.2f" % temp, "cycle ", int((4-System_state[0])/2)+1)
-#     time.sleep(1)
-#     transition = None
-#     if System_state[0] < 1: # end the simulation
-#         newState = "End_state"
-#     else:
-#         if temp < 20:
-#             System_state[0] = System_state[0] - 1
-#             newState = "cool_off_delay"
-#             transition = "  Cool = off (with delay)"
-#         else:
-#             newState = "Cool_on"
-#     return newState, System_state, transition
-#
-# # handler for AC turned on - with delay
-# def cool_on_delay_handler(System_state):
-#     temp = 10 + 20 * random()
-#     print("AC is ON (delay): ", "temp is", "%.2f" % temp, "cycle ", int((4-System_state[0])/2)+1,("with delay of {} seconds)".format(System_state[1]*10)))
-#     time.sleep(1)
-#     transition = None
-#     if System_state[0] < 1: # end the simulation
-#         newState = "End_state"
-#     else:
-#         if System_state[1] < AC_delay:
-#             System_state[1] = System_state[1]+1
-#             newState = "cool_on_delay"
-#         elif temp < 20:
-#             System_state[1] = 0
-#             System_state[0] = System_state[0] - 1
-#             newState = "cool_off_delay"
-#             transition = "  Cool = off (with delay)"
-#         else:
-#             newState = "Cool_on"
-#             transition = "  Cool = on"
-#             System_state[1] = 0
-#     return newState, System_state, transition
-#
-#
-# # handler for AC turned off - with delay
-# def cool_off_delay_handler(System_state):
-#     temp = 10 + 20 * random()
-#     print("AC is OFF (delay): ", "temp is", "%.2f" % temp, "cycle ", int((4-System_state[0])/2)+1,("with delay of {} seconds)".format(System_state[1]*10)))
-#     time.sleep(1)
-#     transition = None
-#     if System_state[0] < 1: # end the simulation
-#         newState = "End_state"
-#     else:
-#         if System_state[1] < AC_off_delay:
-#             System_state[1] = System_state[1]+1
-#             newState = "cool_off_delay"
-#         elif temp > 20:
-#             System_state[1] = 0
-#             System_state[0] = System_state[0] - 1
-#             newState = "cool_on_delay"
-#             transition = "  Cool = on (with delay)"
-#         else:
-#             newState = "Cool_off"
-#             transition = "  Cool = off"
-#             System_state[1] = 0
-#     return newState, System_state, transition
-#
+
 
 if __name__ == '__main__':
     rospy.init_node('turtle_in_field', anonymous=False)
     rospy.loginfo('Main')
     robot = RunRobot()
-    scanner = scanner()
-    print(scanner.callback())
+    rospy.loginfo('robotrunned')
+    while True:
+        print(scan_data)
     robot.start_the_plan()
