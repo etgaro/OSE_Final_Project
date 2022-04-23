@@ -33,7 +33,7 @@ class RunRobot:
         self.r = rospy.Rate(10)
 
     def callback(self,msg):
-        self.scan_data = msg
+        self.scan_data = msg.ranges
 
     def move_forward_handler(self, System_state):
         newState = "move_forward"
@@ -90,5 +90,6 @@ if __name__ == '__main__':
     robot = RunRobot()
     rospy.loginfo('robotrunned')
     while True:
+        time.sleep(1)
         print(robot.scan_data)
     robot.start_the_plan()
