@@ -6,12 +6,13 @@ class scanner():
     def __init__(self):
         #rospy.init_node('scan_values')
         rospy.Subscriber('/scan', LaserScan, self.callback)
-        #rospy.spin()
+        self._scan = LaserScan()
 
-    def callback(self, msg):
-        # for angle in range(0,len(msg.ranges)-1):
-        #     print("angle is {}  --  distance is {}".format(angle, msg.ranges[angle]))
-        return msg.ranges
+    def callback(self,msg):
+        self._scan=msg
+
+    def get_scan_data(self):
+        return self._scan.ranges
 
 
 
