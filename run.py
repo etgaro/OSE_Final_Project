@@ -18,7 +18,18 @@ class RunRobot:
 
         # Create a publisher which can "talk" to TurtleBot and tell it to move
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.scanner = scanner()
 
+        # just to understand what happand and how to !
+
+        count = 0
+        while True:
+            time.sleep(1)
+            data = self.scanner.get_scan_data()
+            rospy.loginfo(data)
+            count += 1
+            if count == 10:
+                break
 
         # Create a Subscriber which can "listen" to TurtleBot scan
 
@@ -87,17 +98,6 @@ if __name__ == '__main__':
     rospy.loginfo('Main')
     robot = RunRobot()
     rospy.loginfo('robotrunned')
-    scanner = scanner()
 
-    # just to understand what happand and how to !
-    count = 0
-    while True:
-        time.sleep(1)
-        data = scanner.get_scan_data()
-        rospy.loginfo(data)
-        count+=1
-        if count == 10:
-            break
-        #print(scan_data)
 
     robot.start_the_plan()
