@@ -8,7 +8,8 @@ from sensor_msgs.msg import LaserScan
 
 
 def callback(msg):
-    global scan_data = msg.ranges
+    global scan_data
+    scan_data = msg.ranges
 
 class RunRobot:
     def __init__(self):
