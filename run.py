@@ -6,7 +6,7 @@ import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
-
+global scan_data
 
 
 class RunRobot:
@@ -23,11 +23,8 @@ class RunRobot:
 
         # Create a Subscriber which can "listen" to TurtleBot scan
 
-        def callback(msg):
-            global scan_data
-            scan_data = msg
-
-        self.sub = rospy.Subscriber('/scan', LaserScan, callback)
+        self.scan_data = None
+        self.sub = rospy.Subscriber('/scan', LaserScan, self.callback(self))
 
 
         self.move_cmd_straight = Twist()
@@ -35,7 +32,8 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0
         self.r = rospy.Rate(10)
 
-
+    def callback(self,msg):
+        self.scan_data = msg
 
     def move_forward_handler(self, System_state):
         newState = "move_forward"
@@ -92,5 +90,5 @@ if __name__ == '__main__':
     robot = RunRobot()
     rospy.loginfo('robotrunned')
     while True:
-        print(scan_data)
+        print(robot.scan_data)
     robot.start_the_plan()
