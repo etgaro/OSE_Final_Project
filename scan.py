@@ -4,7 +4,7 @@ from sensor_msgs.msg import LaserScan
 
 class scanner():
     def __init__(self):
-        rospy.init_node('scan_values')
+        #rospy.init_node('scan_values')
         rospy.Subscriber('/scan', LaserScan, self.callback)
         rospy.spin()
 
