@@ -13,7 +13,7 @@ class scanner():
         self._scan=msg
 
     def get_scan_data(self):
-        return self._scan
+        return self._scan.ranges
 
 
 

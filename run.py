@@ -94,6 +94,7 @@ if __name__ == '__main__':
         time.sleep(1)
         data = scanner.get_scan_data()
         rospy.loginfo(data)
+        count+=1
         if count == 10:
             break
         #print(scan_data)
