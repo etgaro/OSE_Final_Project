@@ -89,11 +89,13 @@ if __name__ == '__main__':
     rospy.loginfo('robotrunned')
     scanner = scanner()
 
-
-    while not rospy.on_shutdown:
+    count = 0
+    while True:
         time.sleep(1)
         data = scanner.get_scan_data()
         rospy.loginfo(data)
+        if count == 10:
+            break
         #print(scan_data)
 
     robot.start_the_plan()
