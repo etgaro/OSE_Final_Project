@@ -6,10 +6,11 @@ import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
+global scan_data
 
 def callback(msg):
-    global scan_data
-    scan_data = msg.ranges
+    print(msg.ranges)
+    #scan_data = msg.ranges
 
 class RunRobot:
     def __init__(self):
@@ -92,5 +93,5 @@ if __name__ == '__main__':
     rospy.loginfo('robotrunned')
     while True:
         time.sleep(1)
-        print(scan_data)
+        #print(scan_data)
     robot.start_the_plan()
