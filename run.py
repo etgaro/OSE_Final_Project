@@ -33,10 +33,8 @@ class RunRobot:
                 break
 
         # Create a Subscriber which can "listen" to TurtleBot scan
-
         # self.scan_data = None
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
-
 
         self.move_cmd_straight = Twist()
         self.move_cmd_straight.linear.x = 0.2
