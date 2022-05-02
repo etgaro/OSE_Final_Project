@@ -38,12 +38,12 @@ class RunRobot:
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
 
 
-       self.move_cmd_straight = Twist()
-       self.move_cmd_straight.linear.x = 0.2
-       self.move_cmd_straight.angular.z = 0
-       self.r = rospy.Rate(10)
+        self.move_cmd_straight = Twist()
+        self.move_cmd_straight.linear.x = 0.2
+        self.move_cmd_straight.angular.z = 0
+        self.r = rospy.Rate(10)
 
-       while True:
+        while True:
             rospy.loginfo(find_wall_on_left(dist))
 
 
@@ -94,12 +94,12 @@ class RunRobot:
         m.run(system_state)
     def find_wall_on_left(self,dist):
         data = self.scanner.get_scan_data()
-        for i in [85,90]
-            if data[i]<dist
+        for i in [85,90]:
+            if data[i]<dist:
                 return "right"
-            else if data[i]>dist
+            elif data[i]>dist:
                 return "left"
-            else
+            else:
                 return "straight"
 
 
