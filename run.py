@@ -28,7 +28,7 @@ class RunRobot:
             data = self.scanner.get_scan_data()
             rospy.loginfo(data[85:95])
             count += 1
-            if count == 10:
+            if count == 20:
                 break
 
         # Create a Subscriber which can "listen" to TurtleBot scan
