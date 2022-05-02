@@ -26,7 +26,7 @@ class RunRobot:
         while True:
             time.sleep(1)
             data = self.scanner.get_scan_data()
-            rospy.loginfo(data[90])
+            rospy.loginfo(data[85:95])
             count += 1
             if count == 10:
                 break
