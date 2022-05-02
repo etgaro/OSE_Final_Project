@@ -20,7 +20,7 @@ class RunRobot:
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.scanner = scanner()
 
-        # just to understand what happand and how to !
+        # just to understand what happened and how to !
 
         count = 0
         while True:
@@ -29,7 +29,7 @@ class RunRobot:
             rospy.loginfo(data[85:95])
             count += 1
             dist = data[90]
-            if count == 20:
+            if count == 10:
                 break
 
         # Create a Subscriber which can "listen" to TurtleBot scan
