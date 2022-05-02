@@ -28,6 +28,7 @@ class RunRobot:
             data = self.scanner.get_scan_data()
             rospy.loginfo(data[85:95])
             count += 1
+            dist = data[90]
             if count == 20:
                 break
 
@@ -37,11 +38,13 @@ class RunRobot:
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
 
 
-      # self.move_cmd_straight = Twist()
-      # self.move_cmd_straight.linear.x = 0.2
-      # self.move_cmd_straight.angular.z = 0
-      # self.r = rospy.Rate(10)
+       self.move_cmd_straight = Twist()
+       self.move_cmd_straight.linear.x = 0.2
+       self.move_cmd_straight.angular.z = 0
+       self.r = rospy.Rate(10)
 
+        while True:
+            rospy.loginfo(find_wall_on_left(dist))
 
 
     def move_forward_handler(self, System_state):
@@ -89,6 +92,15 @@ class RunRobot:
 
         system_state = [4]  # first argument for number of cycles(*2), second for delay variable
         m.run(system_state)
+    def find_wall_on_left(self,dist):
+        data = self.scanner.get_scan_data()
+        for i in [85,90]
+            if data[i]<dist
+                return "right"
+            else if data[i]>dist
+                return "left"
+            else
+                return "straight"
 
 
 
@@ -101,3 +113,4 @@ if __name__ == '__main__':
 
 
     robot.start_the_plan()
+    robot.move_forward_handler()
