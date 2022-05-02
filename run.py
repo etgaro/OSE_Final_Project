@@ -26,7 +26,7 @@ class RunRobot:
         while True:
             time.sleep(1)
             data = self.scanner.get_scan_data()
-            rospy.loginfo(data)
+            rospy.loginfo(data(90))
             count += 1
             if count == 10:
                 break
@@ -37,10 +37,10 @@ class RunRobot:
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
 
 
-        self.move_cmd_straight = Twist()
-        self.move_cmd_straight.linear.x = 0.2
-        self.move_cmd_straight.angular.z = 0
-        self.r = rospy.Rate(10)
+      # self.move_cmd_straight = Twist()
+      # self.move_cmd_straight.linear.x = 0.2
+      # self.move_cmd_straight.angular.z = 0
+      # self.r = rospy.Rate(10)
 
 
 
