@@ -43,7 +43,7 @@ class RunRobot:
        self.move_cmd_straight.angular.z = 0
        self.r = rospy.Rate(10)
 
-        while True:
+       while True:
             rospy.loginfo(find_wall_on_left(dist))
 
 
