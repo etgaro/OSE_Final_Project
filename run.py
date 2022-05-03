@@ -41,8 +41,8 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0
         self.r = rospy.Rate(10)
 
-        while True:
-            rospy.loginfo(find_wall_on_left(dist))
+        # while True:
+        #     rospy.loginfo(self.find_wall_on_left(dist))
 
 
     def move_forward_handler(self, System_state):
@@ -57,6 +57,7 @@ class RunRobot:
         # publish the velocity
         #self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.cmd_vel.publish(self.move_cmd_straight)
+        rospy.loginfo(self.find_wall_on_left(self.dist))
         # wait for 0.1 seconds (10 HZ) and publish again
         self.r.sleep()
 
