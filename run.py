@@ -51,13 +51,16 @@ class RunRobot:
         if rospy.is_shutdown():
             return "end_state", System_state, "finishhh"
 
-        rospy.loginfo("moving")
+        rospy.loginfo("moving forward")
 
 
         # publish the velocity
         #self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.cmd_vel.publish(self.move_cmd_straight)
-        rospy.loginfo(self.find_wall_on_left(self.dist))
+
+
+        #rospy.loginfo(self.find_wall_on_left(self.dist))
+
         # wait for 0.1 seconds (10 HZ) and publish again
         self.r.sleep()
 
@@ -91,6 +94,7 @@ class RunRobot:
 
         system_state = [4]  # first argument for number of cycles(*2), second for delay variable
         m.run(system_state)
+
     def find_wall_on_left(self,dist):
         data = self.scanner.get_scan_data()
         for i in [85,90]:
