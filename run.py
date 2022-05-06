@@ -5,7 +5,7 @@ import time
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
-from statistics import mean
+#from statistics import mean
 
 
 
@@ -116,8 +116,10 @@ class RunRobot:
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
-        list_of_dists = [range_angle for range_angle in data[85:95]]
-        avg_actual_dist = mean(list_of_dists)
+        avg_actual_dist=0
+        for range_angle in data[85:95]:
+            avg_actual_dist = avg_actual_dist+range_angle
+        avg_actual_dist = avg_actual_dist/len(data[85:95])
 
         if avg_actual_dist<self.keep_from_wall_min:
             return "turn_right" , "turning_right"
