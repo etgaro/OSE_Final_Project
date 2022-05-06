@@ -10,6 +10,7 @@ class scanner():
 
     def callback(self,msg):
         print("hey")
+        print(msg.ranges[85:95])
         self._scan=msg
 
     def get_scan_data(self):
