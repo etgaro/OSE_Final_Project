@@ -5,6 +5,7 @@ import time
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from statistics import mean
 
 
 
@@ -39,32 +40,45 @@ class RunRobot:
         self.move_cmd_straight = Twist()
         self.move_cmd_straight.linear.x = 0.1
         self.move_cmd_straight.angular.z = 0
+
+        self.move_cmd_right = Twist()
+        self.move_cmd_right.linear.x = 0.1
+        self.move_cmd_right.angular.z = -0.1
+
+        self.move_cmd_left = Twist()
+        self.move_cmd_left.linear.x = 0.1
+        self.move_cmd_left.angular.z = 0.1
+
         self.r = rospy.Rate(10)
 
-        # while True:
-        #     rospy.loginfo(self.find_wall_on_left(dist))
+        self.keep_from_wall_max = 0.8
+        self.keep_from_wall_min = 0.6
 
 
     def move_forward_handler(self, System_state):
-        newState = "move_forward"
-        transition = None
-        if rospy.is_shutdown():
-            return "end_state", System_state, "finishhh"
 
-        rospy.loginfo("moving forward")
+        # publis command and wait for 0.1 seconds (10 HZ)
 
-
-        # publish the velocity
-        #self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.cmd_vel.publish(self.move_cmd_straight)
-
-
-        #rospy.loginfo(self.find_wall_on_left(self.dist))
-
-        # wait for 0.1 seconds (10 HZ) and publish again
         self.r.sleep()
 
+        newState, transition = self.state_to_go()
         return newState, System_state, transition
+
+    def turn_right_handler(self,System_state):
+
+        self.cmd_vel.publish(self.move_cmd_right)
+        self.r.sleep()
+
+        return "move_forward", System_state, "from right to forward"
+
+
+    def turn_left_handler(self,System_state):
+
+        self.cmd_vel.publish(self.move_cmd_left)
+        self.r.sleep()
+
+        return "move_forward", System_state, "from left to forward"
 
     def terminate(self):
         # stop turtlebot
@@ -78,34 +92,39 @@ class RunRobot:
         return "End_State", ""
 
     def start_the_plan(self):
+
         m = StateMachine()
 
         rospy.loginfo('starting_the_plan')
 
         m.add_state("move_forward", self.move_forward_handler)
-        # m.add_state("Cool_on", cool_on_handler)
-        # m.add_state("cool_off_delay", cool_off_delay_handler)
-        # m.add_state("cool_on_delay", cool_on_delay_handler)
+        m.add_state("turn_right", self.turn_right_handler)
+        m.add_state("turn_left", self.turn_left_handler)
 
         m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
 
-        rospy.loginfo('starting_the_plan_2')
-
         system_state = [4]  # first argument for number of cycles(*2), second for delay variable
+
         m.run(system_state)
 
-    def find_wall_on_left(self,dist):
+    def state_to_go(self):
+        '''return the next state to go to - by average range from left'''
+
+        #if CTRL+C is pressed - end state
+        if rospy.is_shutdown():
+            return "end_state", "finishhh"
+
         data = self.scanner.get_scan_data()
-        for i in [85,90]:
-            if data[i]<dist:
-                return "right"
-            elif data[i]>dist:
-                return "left"
-            else:
-                return "straight"
+        list_of_dists = [range_angle for range_angle in data[85:95]]
+        avg_actual_dist = mean(list_of_dists)
 
-
+        if avg_actual_dist<self.keep_from_wall_min:
+            return "turn_right" , "turning_right"
+        if avg_actual_dist > self.keep_from_wall_max:
+            return "turn_left", "turning_left"
+        else:
+            return "move_forward" "moving_forward"
 
 
 if __name__ == '__main__':
