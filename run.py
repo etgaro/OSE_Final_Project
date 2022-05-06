@@ -132,7 +132,7 @@ class RunRobot:
             return "turn_left", "turning_left"
         else:
             rospy.loginfo('this is forward')
-            return "move_forward" "moving_forward"
+            return "move_forward" ,"moving_forward"
 
 
 if __name__ == '__main__':
