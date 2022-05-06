@@ -26,7 +26,7 @@ class RunRobot:
         while True:
             time.sleep(1)
             data = self.scanner.get_scan_data()
-            rospy.loginfo(data[85:95])
+            rospy.loginfo([round(angle, 1) for angle in data[85:95]])
             count += 1
             dist = data[90]
             if count == 10:
@@ -37,7 +37,7 @@ class RunRobot:
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
 
         self.move_cmd_straight = Twist()
-        self.move_cmd_straight.linear.x = 0.2
+        self.move_cmd_straight.linear.x = 0.1
         self.move_cmd_straight.angular.z = 0
         self.r = rospy.Rate(10)
 
