@@ -54,8 +54,8 @@ class RunRobot:
 
         self.r = rospy.Rate(10)
 
-        self.keep_from_wall_max = 0.6
-        self.keep_from_wall_min = 0.5
+        self.keep_from_wall_max = 0.7
+        self.keep_from_wall_min = 0.6
 
 
     def move_forward_handler(self, System_state):
@@ -133,11 +133,11 @@ class RunRobot:
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
-        print([round(angle, 1) for angle in data[85:95]])
+        print([round(angle, 1) for angle in data[65:95]])
         avg_actual_dist=0
-        for range_angle in data[85:95]:
+        for range_angle in data[65:95]:
             avg_actual_dist = avg_actual_dist+range_angle
-        avg_actual_dist = avg_actual_dist/len(data[85:95])
+        avg_actual_dist = avg_actual_dist/len(data[65:95])
 
         if avg_actual_dist < self.keep_from_wall_min:
            #rospy.loginfo('this is right')
