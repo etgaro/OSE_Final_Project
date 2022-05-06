@@ -120,6 +120,7 @@ class RunRobot:
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
+        print([round(angle, 1) for angle in data[85:95]])
         avg_actual_dist=0
         for range_angle in data[85:95]:
             avg_actual_dist = avg_actual_dist+range_angle
