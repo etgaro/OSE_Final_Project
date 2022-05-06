@@ -54,8 +54,8 @@ class RunRobot:
 
         self.r = rospy.Rate(10)
 
-        self.keep_from_wall_max = 0.8
-        self.keep_from_wall_min = 0.6
+        self.keep_from_wall_max = 0.6
+        self.keep_from_wall_min = 0.5
 
 
     def move_forward_handler(self, System_state):
