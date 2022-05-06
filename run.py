@@ -61,8 +61,10 @@ class RunRobot:
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
-
+        rospy.loginfo('boom boom')
         newState, transition = self.state_to_go()
+        rospy.loginfo('bam bam')
+
         return newState, System_state, transition
 
     def turn_right_handler(self,System_state):
@@ -121,9 +123,9 @@ class RunRobot:
             avg_actual_dist = avg_actual_dist+range_angle
         avg_actual_dist = avg_actual_dist/len(data[85:95])
 
-        if avg_actual_dist<self.keep_from_wall_min:
+        if avg_actual_dist < self.keep_from_wall_min:
             return "turn_right" , "turning_right"
-        if avg_actual_dist > self.keep_from_wall_max:
+        elif avg_actual_dist > self.keep_from_wall_max:
             return "turn_left", "turning_left"
         else:
             return "move_forward" "moving_forward"
