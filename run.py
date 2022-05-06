@@ -42,12 +42,12 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0
 
         self.move_cmd_right = Twist()
-        self.move_cmd_right.linear.x = 0.1
-        self.move_cmd_right.angular.z = -0.1
+        self.move_cmd_right.linear.x = 0.0
+        self.move_cmd_right.angular.z = -0.2
 
         self.move_cmd_left = Twist()
-        self.move_cmd_left.linear.x = 0.1
-        self.move_cmd_left.angular.z = 0.1
+        self.move_cmd_left.linear.x = 0.0
+        self.move_cmd_left.angular.z = 0.2
 
         self.r = rospy.Rate(10)
 
@@ -62,9 +62,7 @@ class RunRobot:
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
 
-        rospy.loginfo('boom boom')
         newState, transition = self.state_to_go()
-        rospy.loginfo('bam bam')
 
         return newState, System_state, transition
 
@@ -125,13 +123,13 @@ class RunRobot:
         avg_actual_dist = avg_actual_dist/len(data[85:95])
 
         if avg_actual_dist < self.keep_from_wall_min:
-            rospy.loginfo('this is right')
+           #rospy.loginfo('this is right')
             return "turn_right" , "turning_right"
         elif avg_actual_dist > self.keep_from_wall_max:
-            rospy.loginfo('this is left')
+            #rospy.loginfo('this is left')
             return "turn_left", "turning_left"
         else:
-            rospy.loginfo('this is forward')
+            #rospy.loginfo('this is forward')
             return "move_forward" ,"moving_forward"
 
 
