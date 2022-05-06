@@ -74,6 +74,12 @@ class RunRobot:
         self.cmd_vel.publish(self.move_cmd_right)
         self.r.sleep()
 
+        self.cmd_vel.publish(self.move_cmd_straight)
+        self.r.sleep()
+
+        self.cmd_vel.publish(self.move_cmd_left)
+        self.r.sleep()
+
         return "move_forward", System_state, "from right to forward"
 
 
@@ -81,6 +87,13 @@ class RunRobot:
 
         self.cmd_vel.publish(self.move_cmd_left)
         self.r.sleep()
+
+        self.cmd_vel.publish(self.move_cmd_straight)
+        self.r.sleep()
+
+        self.cmd_vel.publish(self.move_cmd_right)
+        self.r.sleep()
+
 
         return "move_forward", System_state, "from left to forward"
 
