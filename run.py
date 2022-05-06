@@ -24,14 +24,15 @@ class RunRobot:
         # just to understand what happened and how to !
 
         count = 0
-        while True:
-            time.sleep(1)
-            data = self.scanner.get_scan_data()
-            rospy.loginfo([round(angle, 1) for angle in data[85:95]])
-            count += 1
-            dist = data[90]
-            if count == 10:
-                break
+
+        # while True:
+        #     time.sleep(1)
+        #     data = self.scanner.get_scan_data()
+        #     rospy.loginfo([round(angle, 1) for angle in data[85:95]])
+        #     count += 1
+        #     dist = data[90]
+        #     if count == 10:
+        #         break
 
         # Create a Subscriber which can "listen" to TurtleBot scan
         # self.scan_data = None
@@ -42,12 +43,12 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0
 
         self.move_cmd_right = Twist()
-        self.move_cmd_right.linear.x = 0.1
-        self.move_cmd_right.angular.z = 0.3
+        self.move_cmd_right.linear.x = 0.0
+        self.move_cmd_right.angular.z = -0.2
 
         self.move_cmd_left = Twist()
-        self.move_cmd_left.linear.x = 0.1
-        self.move_cmd_left.angular.z = -0.3
+        self.move_cmd_left.linear.x = 0.0
+        self.move_cmd_left.angular.z = 0.2
 
         self.r = rospy.Rate(10)
 
