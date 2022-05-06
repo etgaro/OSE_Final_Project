@@ -57,10 +57,11 @@ class RunRobot:
 
     def move_forward_handler(self, System_state):
 
-        # publis command and wait for 0.1 seconds (10 HZ)
+        # publish command and wait for 0.1 seconds (10 HZ)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
+
         rospy.loginfo('boom boom')
         newState, transition = self.state_to_go()
         rospy.loginfo('bam bam')
@@ -124,10 +125,13 @@ class RunRobot:
         avg_actual_dist = avg_actual_dist/len(data[85:95])
 
         if avg_actual_dist < self.keep_from_wall_min:
+            rospy.loginfo('this is right')
             return "turn_right" , "turning_right"
         elif avg_actual_dist > self.keep_from_wall_max:
+            rospy.loginfo('this is left')
             return "turn_left", "turning_left"
         else:
+            rospy.loginfo('this is forward')
             return "move_forward" "moving_forward"
 
 
