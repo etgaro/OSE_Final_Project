@@ -23,15 +23,15 @@ class Rotate():
         r = rospy.Rate(10);
 
         # Twist is a datatype for velocity
-        move_cmd = Twist()
+        self.move_cmd = Twist()
         # let's go forward at 0.2 m/s
-        move_cmd.linear.x = 0
+        self.cmd_vel.linear.x = 0
         # let's turn at 0 radians/s
-        move_cmd.angular.z = 0.5
+        self.move_cmd.angular.z = 0.5
 
         # as long as you haven't ctrl + c keeping doing...
 
-        self.cmd_vel.publish(move_cmd)
+        self.cmd_vel.publish(self.move_cmd)
         # wait for 0.1 seconds (10 HZ) and publish again
         for x in range(1,4):
             rospy.loginfo(x)
