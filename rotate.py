@@ -20,7 +20,7 @@ class Rotate():
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
         # TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
-        r = rospy.Rate(2);
+        self.r = rospy.Rate(2)
 
         # Twist is a datatype for velocity
         self.move_cmd = Twist()
@@ -35,7 +35,7 @@ class Rotate():
         # wait for 0.1 seconds (10 HZ) and publish again
         for x in range(1,4):
             rospy.loginfo(x)
-            r.sleep()
+            self.r.sleep()
 
     def shutdown(self):
         # stop turtlebot
@@ -43,7 +43,7 @@ class Rotate():
         # a default Twist has linear.x of 0 and angular.z of 0.  So it'll stop TurtleBot
         self.cmd_vel.publish(Twist())
         # sleep just makes sure TurtleBot receives the stop command prior to shutting down the script
-        rospy.sleep(1)
+        self.r.sleep()
 
 
 if __name__ == '__main__':
