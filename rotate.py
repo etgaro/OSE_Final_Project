@@ -25,7 +25,7 @@ class Rotate():
         # Twist is a datatype for velocity
         self.move_cmd = Twist()
         # let's go forward at 0.2 m/s
-        self.cmd_vel.linear.x = 0
+        self.move_cmd.linear.x = 0
         # let's turn at 0 radians/s
         self.move_cmd.angular.z = 0.5
 
