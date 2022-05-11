@@ -80,20 +80,20 @@ class RunRobot:
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(1)
+        rospy.sleep(.1)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(1)
+        rospy.sleep(.1)
 
         self.cmd_vel.publish(self.move_cmd_left)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(1)
+        rospy.sleep(.1)
 
         return "move_forward", System_state, "from right to forward"
 
@@ -104,20 +104,20 @@ class RunRobot:
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(1)
+        rospy.sleep(.1)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(1)
+        rospy.sleep(.1)
 
         self.cmd_vel.publish(self.move_cmd_right)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(1)
+        rospy.sleep(.1)
         return "move_forward", System_state, "from left to forward"
 
     def terminate(self):
@@ -126,7 +126,7 @@ class RunRobot:
         # a default Twist has linear.x of 0 and angular.z of 0.  So it'll stop TurtleBot
         self.cmd_vel.publish(Twist())
         # sleep just makes sure TurtleBot receives the stop command prior to shutting down the script
-        rospy.sleep(1)
+        rospy.sleep(.1)
         rospy.loginfo("\r")
         rospy.loginfo("\r Done")
         return "End_State", ""
