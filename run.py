@@ -80,20 +80,20 @@ class RunRobot:
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        self.r.sleep(1)
+        rospy.sleep(1)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        self.r.sleep(1)
+        rospy.sleep(1)
 
         self.cmd_vel.publish(self.move_cmd_left)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        self.r.sleep(1)
+        rospy.sleep(1)
 
         return "move_forward", System_state, "from right to forward"
 
@@ -104,21 +104,20 @@ class RunRobot:
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        self.r.sleep(1)
+        rospy.sleep(1)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        self.r.sleep(1)
+        rospy.sleep(1)
 
         self.cmd_vel.publish(self.move_cmd_right)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        self.r.sleep(1)
-
+        rospy.sleep(1)
         return "move_forward", System_state, "from left to forward"
 
     def terminate(self):
