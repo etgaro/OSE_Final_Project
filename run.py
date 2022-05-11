@@ -74,50 +74,48 @@ class RunRobot:
 
         return newState, System_state, transition
 
-    def turn_right_handler(self,System_state):
+    def correctright_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_right)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.1)
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_straight)
-        self.r.sleep()
-        self.r.sleep()
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.1)
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_left)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.1)
+        rospy.sleep(.05)
 
         return "move_forward", System_state, "from right to forward"
 
 
-    def turn_left_handler(self,System_state):
+    def correctleft_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_left)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.1)
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_straight)
-        self.r.sleep()
-        self.r.sleep()
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.1)
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_right)
         self.r.sleep()
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.1)
+        rospy.sleep(.05)
         return "move_forward", System_state, "from left to forward"
 
     def terminate(self):
@@ -138,8 +136,8 @@ class RunRobot:
         rospy.loginfo('starting_the_plan')
 
         m.add_state("move_forward", self.move_forward_handler)
-        m.add_state("turn_right", self.turn_right_handler)
-        m.add_state("turn_left", self.turn_left_handler)
+        m.add_state("correctright", self.correctright_handler)
+        m.add_state("correctleft", self.correctleft_handler)
 
         m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
@@ -166,10 +164,10 @@ class RunRobot:
         rospy.loginfo(avg_actual_dist)
         if avg_actual_dist < self.keep_from_wall_min:
            #rospy.loginfo('this is right')
-            return "turn_right" , "turning_right"
+            return "correctright" , "correcting_right"
         elif avg_actual_dist > self.keep_from_wall_max:
             #rospy.loginfo('this is left')
-            return "turn_left", "turning_left"
+            return "correctleft", "correcting_left"
         else:
             #rospy.loginfo('this is forward')
             return "move_forward", "moving_forward"
