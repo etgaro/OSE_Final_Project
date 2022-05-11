@@ -55,7 +55,7 @@ class RunRobot:
         self.r = rospy.Rate(10)
 
         self.keep_from_wall_max = 0.40
-        self.keep_from_wall_min = 0.30
+        self.keep_from_wall_min = 0.20
 
         self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
@@ -160,9 +160,9 @@ class RunRobot:
         #print(len([round(angle, 1) for angle in data[65:95]]))
 
         avg_actual_dist=0
-        for range_angle in data[65:95]:
+        for range_angle in data[85:95]:
             avg_actual_dist = avg_actual_dist+range_angle
-        avg_actual_dist = avg_actual_dist/len(data[65:95])
+        avg_actual_dist = avg_actual_dist/len(data[85:95])
         rospy.loginfo(avg_actual_dist)
         if avg_actual_dist < self.keep_from_wall_min:
            #rospy.loginfo('this is right')
