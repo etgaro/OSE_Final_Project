@@ -55,7 +55,7 @@ class RunRobot:
         self.r = rospy.Rate(10)
 
         self.keep_from_wall_max = 0.40
-        self.keep_from_wall_min = 0.20
+        self.keep_from_wall_min = 0.30
 
         self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
