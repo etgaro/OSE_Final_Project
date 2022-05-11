@@ -57,6 +57,11 @@ class RunRobot:
         self.keep_from_wall_max = 0.40
         self.keep_from_wall_min = 0.30
 
+        self.cmd_vel.publish(self.move_cmd)
+        # wait for 0.1 seconds (10 HZ) and publish again
+        for x in range(1,4):
+            rospy.loginfo(x)
+            self.r.sleep()
 
     def move_forward_handler(self, System_state):
 
