@@ -68,6 +68,9 @@ class RunRobot:
         # publish command and wait for 0.1 seconds (10 HZ)
         while(True):
             self.cmd_vel.publish(self.move_cmd_right)
+            if rospy.is_shutdown():
+                newState =  "end_state"
+                break
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
 
