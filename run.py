@@ -41,7 +41,7 @@ class RunRobot:
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
 
         self.move_cmd_straight = Twist()
-        self.move_cmd_straight.linear.x = 0.1
+        self.move_cmd_straight.linear.x = 0.5
         self.move_cmd_straight.angular.z = 0
 
         self.move_cmd_right = Twist()
