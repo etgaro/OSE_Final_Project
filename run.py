@@ -66,7 +66,8 @@ class RunRobot:
     def move_forward_handler(self, System_state):
 
         # publish command and wait for 0.1 seconds (10 HZ)
-
+        while(True):
+            self.cmd_vel.publish(self.move_cmd_right)
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
 
