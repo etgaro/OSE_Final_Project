@@ -52,7 +52,7 @@ class RunRobot:
         self.move_cmd_left.linear.x = 0.0
         self.move_cmd_left.angular.z = -0.5
 
-        self.r = rospy.Rate(5)
+        self.r = rospy.Rate(1)
 
         self.keep_from_wall_max = 0.40
         self.keep_from_wall_min = 0.30
