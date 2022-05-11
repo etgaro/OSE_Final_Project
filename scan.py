@@ -9,7 +9,7 @@ class scanner():
         self._scan = LaserScan()
 
     def callback(self,msg):
-        print("hey")
+        #print("hey")
         print(msg.ranges[85:95])
         self._scan=msg
 

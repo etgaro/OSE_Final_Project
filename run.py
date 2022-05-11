@@ -52,10 +52,10 @@ class RunRobot:
         self.move_cmd_left.linear.x = 0.0
         self.move_cmd_left.angular.z = 0.5
 
-        self.r = rospy.Rate(10)
+        self.r = rospy.Rate(5)
 
-        self.keep_from_wall_max = 0.7
-        self.keep_from_wall_min = 0.6
+        self.keep_from_wall_max = 0.40
+        self.keep_from_wall_min = 0.30
 
 
     def move_forward_handler(self, System_state):
@@ -134,7 +134,7 @@ class RunRobot:
 
         data = self.scanner.get_scan_data()
 
-        print(len([round(angle, 1) for angle in data[65:95]]))
+        #print(len([round(angle, 1) for angle in data[65:95]]))
 
         avg_actual_dist=0
         for range_angle in data[65:95]:
@@ -149,7 +149,7 @@ class RunRobot:
             return "turn_left", "turning_left"
         else:
             #rospy.loginfo('this is forward')
-            return "move_forward" ,"moving_forward"
+            return "move_forward", "moving_forward"
 
 
 if __name__ == '__main__':
