@@ -52,12 +52,12 @@ class RunRobot:
         self.move_cmd_left.linear.x = 0.0
         self.move_cmd_left.angular.z = 2
 
-        self.r = rospy.Rate(10)
+        self.r = rospy.Rate(1)
 
         self.keep_from_wall_max = 0.40
         self.keep_from_wall_min = 0.30
 
-        self.cmd_vel.publish(self.move_cmd_left)
+        self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
         for x in range(1,4):
             rospy.loginfo(x)
