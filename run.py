@@ -76,6 +76,8 @@ class RunRobot:
 
         self.cmd_vel.publish(self.move_cmd_straight)
         self.r.sleep()
+        self.r.sleep()
+        self.r.sleep()
 
         self.cmd_vel.publish(self.move_cmd_left)
         self.r.sleep()
@@ -89,6 +91,8 @@ class RunRobot:
         self.r.sleep()
 
         self.cmd_vel.publish(self.move_cmd_straight)
+        self.r.sleep()
+        self.r.sleep()
         self.r.sleep()
 
         self.cmd_vel.publish(self.move_cmd_right)

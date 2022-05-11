@@ -20,7 +20,7 @@ class Rotate():
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
         # TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
-        r = rospy.Rate(1);
+        r = rospy.Rate(10);
 
         # Twist is a datatype for velocity
         move_cmd = Twist()
