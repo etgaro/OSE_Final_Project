@@ -85,6 +85,7 @@ class RunRobot:
             newState, transition = self.adapt_distance()
 
             return newState, System_state, transition
+
         else:
 
             newState, transition = self.adapt_angle()
@@ -224,7 +225,7 @@ class RunRobot:
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
-        if min_index<=95 and min_index>=85:
+        if (min_index<=95 and min_index>=85):
             return True
         else:
             return  False
