@@ -6,14 +6,14 @@ class scanner():
     def __init__(self):
         #rospy.init_node('scan_values')
         self.sub = rospy.Subscriber('/scan', LaserScan, self.callback)
-        self._scan = LaserScan()
+        self.scan = LaserScan()
 
     def callback(self,msg):
         print("hey")
-        self._scan=msg
+        self.scan=msg
 
     def get_scan_data(self):
-        return self._scan.ranges
+        return self.scan.ranges
 
 
 
