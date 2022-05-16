@@ -159,8 +159,8 @@ class RunRobot:
         m.add_state("move_forward", self.move_forward_handler)
         m.add_state("correctright", self.correctright_handler)
         m.add_state("correctleft", self.correctleft_handler)
-        m.add_state('clockwise',self.correct_clockwise())
-        m.add_state('un_clockwise', self.correct_un_clockwise())
+        m.add_state('clockwise',self.correct_clockwise)
+        m.add_state('un_clockwise', self.correct_un_clockwise)
 
         m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
