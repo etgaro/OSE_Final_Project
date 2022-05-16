@@ -194,7 +194,8 @@ class RunRobot:
             return "move_forward", "moving_forward"
 
     def adapt_angle(self):
-        left_data = self.scanner.get_scan_data()[0:180]
+        data = self.scanner.get_scan_data()
+        left_data = data[0:180]
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
@@ -204,7 +205,8 @@ class RunRobot:
             return 'un_clockwise','adapting_un_clockwise'
 
     def is_parallel(self):
-        left_data = self.scanner.get_scan_data()[0:180]
+        data = self.scanner.get_scan_data()
+        left_data = data[0:180]
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
