@@ -195,7 +195,8 @@ class RunRobot:
 
     def adapt_angle(self):
         data = self.scanner.get_scan_data()
-        left_data = data[0:180]
+        left_data = data[1:180]
+        rospy.loginfo(len(left_data))
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
@@ -206,7 +207,8 @@ class RunRobot:
 
     def is_parallel(self):
         data = self.scanner.get_scan_data()
-        left_data = data[0:180]
+        left_data = data[1:180]
+        rospy.loginfo(len(left_data))
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
