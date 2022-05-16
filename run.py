@@ -3,6 +3,7 @@ from scan import scanner
 from random import random
 import time
 import rospy
+import numpy as np
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 #from statistics import mean
@@ -194,7 +195,7 @@ class RunRobot:
 
     def adapt_angle(self):
         left_data = self.scanner.get_scan_data()[0:180]
-        min_value = min(left_data)
+        min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
         if min_index<90:
@@ -204,7 +205,7 @@ class RunRobot:
 
     def is_parallel(self):
         left_data = self.scanner.get_scan_data()[0:180]
-        min_value = min(left_data)
+        min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
         if min_index<=95 and min_index>=85:
