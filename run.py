@@ -22,8 +22,9 @@ class RunRobot:
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.scanner = scanner()
         rospy.loginfo("i scanned")
-        data = self.scanner.get_scan_data()
-        rospy.loginfo([round(angle, 1) for angle in data[85:95]])
+        while(not rospy.on_shutdown):
+            data = self.scanner.get_scan_data()
+            rospy.loginfo([round(angle, 1) for angle in data[85:95]])
 
 
         # count = 0
