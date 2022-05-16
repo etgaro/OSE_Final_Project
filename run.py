@@ -209,6 +209,9 @@ class RunRobot:
             return "move_forward", "moving_forward"
 
     def adapt_angle(self):
+        if rospy.is_shutdown():
+            return "end_state", "finishhh"
+
         data = self.scanner.get_scan_data()
         left_data = data[1:180]
         min_value = np.min(left_data)
@@ -225,7 +228,7 @@ class RunRobot:
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
-        if (min_index<=95 and min_index>=85):
+        if (min_index<=91 and min_index>=89):
             return True
         else:
             return  False
