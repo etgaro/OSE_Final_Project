@@ -59,20 +59,41 @@ class RunRobot:
 
         self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
-        for x in range(1,4):
-            rospy.loginfo(x)
-            self.r.sleep()
 
     def move_forward_handler(self, System_state):
 
         # publish command and wait for 0.1 seconds (10 HZ)
+        if(self.is_parallel()):
+            self.cmd_vel.publish(self.move_cmd_straight)
+            self.r.sleep()
 
-        self.cmd_vel.publish(self.move_cmd_straight)
+            newState, transition = self.adapt_distance()
+
+            return newState, System_state, transition
+        else:
+
+            newState, transition = self.adapt_angle()
+
+            return newState, System_state, transition
+
+    def correct_clockwise(self,System_state):
+
+        self.cmd_vel.publish(self.move_cmd_right)
         self.r.sleep()
 
-        newState, transition = self.state_to_go()
+        self.cmd_vel.publish(Twist())
 
-        return newState, System_state, transition
+        return "move_forward", System_state, "from clockwise to forward"
+
+
+    def correct_un_clockwise(self, System_state):
+
+        self.cmd_vel.publish(self.move_cmd_left)
+        self.r.sleep()
+
+        self.cmd_vel.publish(Twist())
+
+        return "move_forward", System_state, "from un_clockwise to forward"
 
     def correctright_handler(self,System_state):
 
@@ -83,7 +104,7 @@ class RunRobot:
         rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_straight)
-        rospy.sleep(.05)
+        rospy.sleep(.1)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -138,6 +159,8 @@ class RunRobot:
         m.add_state("move_forward", self.move_forward_handler)
         m.add_state("correctright", self.correctright_handler)
         m.add_state("correctleft", self.correctleft_handler)
+        m.add_state('clockwise',self.correct_clockwise())
+        m.add_state('un_clockwise', self.correct_un_clockwise())
 
         m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
@@ -146,17 +169,14 @@ class RunRobot:
 
         m.run(system_state)
 
-    def state_to_go(self):
-        '''return the next state to go to - by average range from left'''
+    def adapt_distance(self):
+        '''return the next state to go to'''
 
         #if CTRL+C is pressed - end state
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
-
-        #print(len([round(angle, 1) for angle in data[65:95]]))
-
         avg_actual_dist=0
         for range_angle in data[65:95]:
             avg_actual_dist = avg_actual_dist+range_angle
@@ -172,6 +192,25 @@ class RunRobot:
             #rospy.loginfo('this is forward')
             return "move_forward", "moving_forward"
 
+    def adapt_angle(self):
+        left_data = self.scanner.get_scan_data()[0:180]
+        min_value = min(left_data)
+        min_index = left_data.index(min_value)
+
+        if min_index<90:
+            return 'clockwise','adapting_clockwise'
+        else:
+            return 'un_clockwise','adapting_un_clockwise'
+
+    def is_parallel(self):
+        left_data = self.scanner.get_scan_data()[0:180]
+        min_value = min(left_data)
+        min_index = left_data.index(min_value)
+
+        if min_index<=95 and min_index>=85:
+            return True
+        else:
+            return  False
 
 if __name__ == '__main__':
     rospy.init_node('turtle_in_field', anonymous=False)
