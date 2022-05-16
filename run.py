@@ -21,7 +21,6 @@ class RunRobot:
         # Create a publisher which can "talk" to TurtleBot and tell it to move
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.scanner = scanner()
-        rospy.sleep(10)
         #data = self.scanner.get_scan_data()
 
         rospy.loginfo([round(angle, 1) for angle in self.scanner.get_scan_data()[85:95]])

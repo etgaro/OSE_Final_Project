@@ -7,6 +7,7 @@ class scanner():
         #rospy.init_node('scan_values')
         self.sub = rospy.Subscriber('/scan', LaserScan, self.callback)
         self.scan = LaserScan()
+        rospy.sleep(1)
 
     def callback(self,msg):
         print("hey")
