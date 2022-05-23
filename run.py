@@ -75,6 +75,8 @@ class RunRobot:
         self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
 
+        self.previous_state = null
+
     def move_forward_handler(self, System_state):
 
         # publish command and wait for 0.1 seconds (10 HZ)
@@ -218,10 +220,12 @@ class RunRobot:
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
 
-        if min_index<90:
+        if min_index<89:
             return 'clockwise','adapting_clockwise'
-        else:
+        elif min_index>91:
             return 'un_clockwise','adapting_un_clockwise'
+        else:
+            return "move_forward", "moving_forward"
 
     def is_parallel(self):
         data = self.scanner.get_scan_data()
