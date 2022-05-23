@@ -171,7 +171,7 @@ class RunRobot:
     def start_the_plan(self):
 
         m = StateMachine()
-
+        #hell0
         rospy.loginfo('starting_the_plan')
 
         m.add_state("move_forward", self.move_forward_handler)
