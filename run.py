@@ -56,16 +56,16 @@ class RunRobot:
         # self.sub = rospy.Subscriber('/scan', LaserScan, callback)
 
         self.move_cmd_straight = Twist()
-        self.move_cmd_straight.linear.x = 0.5
+        self.move_cmd_straight.linear.x = 0.3
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_right = Twist()
         self.move_cmd_right.linear.x = 0
-        self.move_cmd_right.angular.z = -0.5
+        self.move_cmd_right.angular.z = -0.3
 
         self.move_cmd_left = Twist()
         self.move_cmd_left.linear.x = 0
-        self.move_cmd_left.angular.z = 0.5
+        self.move_cmd_left.angular.z = 0.3
 
         self.r = rospy.Rate(10)
 
@@ -114,7 +114,7 @@ class RunRobot:
     def correctright_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_right)
-        self.r.sleep()
+        self.r.sleep(.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -126,7 +126,7 @@ class RunRobot:
         rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_left)
-        self.r.sleep()
+        self.r.sleep(.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -137,19 +137,19 @@ class RunRobot:
     def correctleft_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_left)
-        self.r.sleep()
+        self.r.sleep(0.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_straight)
-        rospy.sleep(.05)
+        rospy.sleep(.1)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_right)
-        self.r.sleep()
+        self.r.sleep(0.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -225,7 +225,7 @@ class RunRobot:
 
     def is_parallel(self):
         data = self.scanner.get_scan_data()
-        left_data = data[1:180]
+        left_data = data[70:110]
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
