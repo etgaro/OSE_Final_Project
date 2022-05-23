@@ -115,7 +115,7 @@ class RunRobot:
     def correctright_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_right)
-        rospy.sleep(.05)
+        rospy.sleep(.2)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -126,11 +126,11 @@ class RunRobot:
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
 
-        self.cmd_vel.publish(self.move_cmd_left)
-        rospy.sleep(.05)
+       # self.cmd_vel.publish(self.move_cmd_left)
+       # rospy.sleep(.05)
 
-        self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+       # self.cmd_vel.publish(Twist())
+       # rospy.sleep(.05)
 
         return "move_forward", System_state, "from right to forward"
 
@@ -138,7 +138,7 @@ class RunRobot:
     def correctleft_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_left)
-        rospy.sleep(0.05)
+        rospy.sleep(0.2)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -149,11 +149,11 @@ class RunRobot:
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
 
-        self.cmd_vel.publish(self.move_cmd_right)
-        rospy.sleep(0.05)
+       # self.cmd_vel.publish(self.move_cmd_right)
+       # rospy.sleep(0.05)
 
-        self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+       # self.cmd_vel.publish(Twist())
+       # rospy.sleep(.05)
         return "move_forward", System_state, "from left to forward"
 
     def terminate(self):
