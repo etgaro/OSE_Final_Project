@@ -214,8 +214,8 @@ class RunRobot:
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
-        left_data = data[70:110]
-        min_value = np.min(left_data)
+        #left_data = data[70:110]
+        min_value = np.min(data[70:110])
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
 
@@ -228,8 +228,8 @@ class RunRobot:
 
     def is_parallel(self):
         data = self.scanner.get_scan_data()
-        left_data = data[70:110]
-        min_value = np.min(left_data)
+        #left_data = data[70:110]
+        min_value = np.min(data[70:110])
         min_index = left_data.index(min_value)
 
         if (min_index<=91 and min_index>=89):
