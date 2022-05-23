@@ -69,6 +69,7 @@ def callback_laser(msg):
     laser_range = np.array(msg.ranges)
     front_range = laser_range[340:360]
     front_range.insert(0,laser_range[0:20])
+
     section = {
         'front': min(front_range),
         'left': min(laser_range[70:110]),
