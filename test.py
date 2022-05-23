@@ -67,10 +67,8 @@ def callback_laser(msg):
     global section
 
     laser_range = np.array(msg.ranges)
-    front_range = laser_range[340:360]
-    front_range.insert(0,laser_range[0:20])
     section = {
-        'front': min(front_range),
+        'front': min(min(laser_range[0:20]),min(laser_range[340:360])),
         'left': min(laser_range[70:110]),
         'right': min(laser_range[250:290]),
     }
@@ -91,8 +89,8 @@ Function: bug_action: This function uses a global function to set the direction 
 def bug_action():
     global follow_dir
 
-    b = 1  # maximum threshold distance
-    a = 0.5  # minimum threshold distance
+    b = 0.5  # maximum threshold distance
+    a = 0.3  # minimum threshold distance
     velocity = Twist()  # Odometry call for velocity
     linear_x = 0  # Odometry message for linear velocity will be called here.
     angular_z = 0  # Odometry message for angular velocity will be called here.
