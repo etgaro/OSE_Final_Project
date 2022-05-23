@@ -68,9 +68,9 @@ def callback_laser(msg):
 
     laser_range = np.array(msg.ranges)
     section = {
-        'front': min(laser_range[70:110]),
-        'left': min(laser_range[0:40]),
-        'right': min(laser_range[140:180]),
+        'front': min(laser_range[340:20]),
+        'left': min(laser_range[70:110]),
+        'right': min(laser_range[250:290]),
     }
 
     bug_action()
@@ -240,7 +240,7 @@ def check():
 
         pub.publish(velocity)
 
-    rospy.spin()
+        rospy.spin()
 
 
 if __name__ == "__main__":
