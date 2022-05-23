@@ -80,6 +80,7 @@ class RunRobot:
 
         # publish command and wait for 0.1 seconds (10 HZ)
         if(self.is_parallel()):
+
             self.cmd_vel.publish(self.move_cmd_straight)
             rospy.sleep(0.5)
 
