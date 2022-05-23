@@ -115,7 +115,7 @@ class RunRobot:
     def correctright_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_right)
-        self.r.sleep(.05)
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -127,7 +127,7 @@ class RunRobot:
         rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_left)
-        self.r.sleep(.05)
+        rospy.sleep(.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -138,7 +138,7 @@ class RunRobot:
     def correctleft_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_left)
-        self.r.sleep(0.05)
+        rospy.sleep(0.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -150,7 +150,7 @@ class RunRobot:
         rospy.sleep(.05)
 
         self.cmd_vel.publish(self.move_cmd_right)
-        self.r.sleep(0.05)
+        rospy.sleep(0.05)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -219,9 +219,9 @@ class RunRobot:
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
 
-        if min_index<19:
+        if min_index<15:
             return 'clockwise','adapting_clockwise'
-        elif min_index>21:
+        elif min_index>25:
             return 'un_clockwise','adapting_un_clockwise'
         else:
             return "move_forward", "moving_forward"
@@ -234,7 +234,7 @@ class RunRobot:
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
 
-        if (min_index<=21 and min_index>=19):
+        if (min_index<=25 and min_index>=15):
             return True
         else:
             return  False
