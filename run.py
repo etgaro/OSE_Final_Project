@@ -61,15 +61,15 @@ class RunRobot:
 
         self.move_cmd_right = Twist()
         self.move_cmd_right.linear.x = 0
-        self.move_cmd_right.angular.z = -0.3
+        self.move_cmd_right.angular.z = -0.4
 
         self.move_cmd_left = Twist()
         self.move_cmd_left.linear.x = 0
-        self.move_cmd_left.angular.z = 0.3
+        self.move_cmd_left.angular.z = 0.4
 
         self.r = rospy.Rate(10)
 
-        self.keep_from_wall_max = 0.35
+        self.keep_from_wall_max = 0.30
         self.keep_from_wall_min = 0.20
 
         self.cmd_vel.publish(self.move_cmd_straight)
