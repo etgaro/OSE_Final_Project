@@ -60,11 +60,11 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_right = Twist()
-        self.move_cmd_right.linear.x = 0
+        self.move_cmd_right.linear.x = 0.3
         self.move_cmd_right.angular.z = -0.4
 
         self.move_cmd_left = Twist()
-        self.move_cmd_left.linear.x = 0
+        self.move_cmd_left.linear.x = 0.3
         self.move_cmd_left.angular.z = 0.4
 
         self.r = rospy.Rate(10)
@@ -120,11 +120,11 @@ class RunRobot:
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
 
-        self.cmd_vel.publish(self.move_cmd_straight)
-        rospy.sleep(.1)
+       # self.cmd_vel.publish(self.move_cmd_straight)
+       # rospy.sleep(.05)
 
-        self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+       # self.cmd_vel.publish(Twist())
+       # rospy.sleep(.05)
 
        # self.cmd_vel.publish(self.move_cmd_left)
        # rospy.sleep(.05)
@@ -143,11 +143,11 @@ class RunRobot:
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
 
-        self.cmd_vel.publish(self.move_cmd_straight)
-        rospy.sleep(.1)
+       # self.cmd_vel.publish(self.move_cmd_straight)
+       # rospy.sleep(.05)
 
-        self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+       # self.cmd_vel.publish(Twist())
+       # rospy.sleep(.05)
 
        # self.cmd_vel.publish(self.move_cmd_right)
        # rospy.sleep(0.05)
