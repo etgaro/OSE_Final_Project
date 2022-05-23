@@ -214,25 +214,25 @@ class RunRobot:
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
-        #left_data = data[70:110]
-        min_value = np.min(data[70:110])
+        left_data = data[70:110]
+        min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
 
-        if min_index<89:
+        if min_index<19:
             return 'clockwise','adapting_clockwise'
-        elif min_index>91:
+        elif min_index>21:
             return 'un_clockwise','adapting_un_clockwise'
         else:
             return "move_forward", "moving_forward"
 
     def is_parallel(self):
-        data = self.scanner.get_scan_data()
-        #left_data = data[70:110]
-        min_value = np.min(data[70:110])
+        left_data = data[70:110]
+        min_value = np.min(left_data)
         min_index = left_data.index(min_value)
+        rospy.loginfo(min_index)
 
-        if (min_index<=91 and min_index>=89):
+        if (min_index<=21 and min_index>=19):
             return True
         else:
             return  False
