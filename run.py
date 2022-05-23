@@ -60,11 +60,11 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_right = Twist()
-        self.move_cmd_right.linear.x = 0.3
+        self.move_cmd_right.linear.x = 0.05
         self.move_cmd_right.angular.z = -0.4
 
         self.move_cmd_left = Twist()
-        self.move_cmd_left.linear.x = 0.3
+        self.move_cmd_left.linear.x = 0.05
         self.move_cmd_left.angular.z = 0.4
 
         self.r = rospy.Rate(10)
@@ -115,7 +115,7 @@ class RunRobot:
     def correctright_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_right)
-        rospy.sleep(.2)
+        rospy.sleep(.3)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
@@ -138,7 +138,7 @@ class RunRobot:
     def correctleft_handler(self,System_state):
 
         self.cmd_vel.publish(self.move_cmd_left)
-        rospy.sleep(0.2)
+        rospy.sleep(0.3)
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.05)
