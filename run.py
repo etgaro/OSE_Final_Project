@@ -214,7 +214,7 @@ class RunRobot:
             return "end_state", "finishhh"
 
         data = self.scanner.get_scan_data()
-        left_data = data[1:180]
+        left_data = data[70:110]
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
