@@ -67,6 +67,10 @@ class scanner():
 
     def get_tree_angles_dist(self):
         data = self.get_scan_data()
+        distance_between_trees = 0.7
+        for angle in data:
+            if data[angle]>distance_between_trees*2:
+                data[angle] = 0
 
         angle_front = self.get_avg_angle(data, 70, 0, -1)
         angle_back = self.get_avg_angle(data, 110, 180, 1)
