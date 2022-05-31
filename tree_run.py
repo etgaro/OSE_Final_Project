@@ -26,6 +26,10 @@ class RunRobot:
         self.move_cmd_straight.linear.x = 0.3
         self.move_cmd_straight.angular.z = 0.0
 
+        self.move_cmd_straight_slow = Twist()
+        self.move_cmd_straight_slow.linear.x = 0.1
+        self.move_cmd_straight_slow.angular.z = 0.0
+
         self.move_cmd_right = Twist()
         self.move_cmd_right.linear.x = 0
         self.move_cmd_right.angular.z = -0.4
@@ -37,7 +41,7 @@ class RunRobot:
         self.r = rospy.Rate(10)
 
         self.keep_from_wall_max = 0.30
-        self.keep_from_wall_min = 0.20
+        self.keep_from_wall_min = 0.15
 
         self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
@@ -79,6 +83,15 @@ class RunRobot:
         self.cmd_vel.publish(Twist())
 
         return "move_forward", System_state, "from un_clockwise to forward"
+
+    def tree_from_side_handler(self, System_state):
+
+        self.cmd_vel.publish(self.move_cmd_straight_slow)
+        self.r.sleep()
+
+        newState, transition = self.adapt_distance()
+
+        return newState, System_state, transition
 
     def correctright_handler(self,System_state):
 
@@ -146,6 +159,8 @@ class RunRobot:
         m.add_state("correctleft", self.correctleft_handler)
         m.add_state('clockwise',self.correct_clockwise)
         m.add_state('un_clockwise', self.correct_un_clockwise)
+        m.add_state('tree_from_side', self.tree_from_side_handler)
+
 
         m.add_state("End_state", self.terminate, end_state=1)
         m.set_start("move_forward")
@@ -161,6 +176,9 @@ class RunRobot:
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
+        left_real_data = self.scanner.get_scan_data()
+        if sum(left_real_data[88:92])/5 > 0:
+            return "tree_from_side", "tree_from_side!!"
         #data = self.scanner.get_scan_data()
 
         # data = self.scanner.get_scan_data()
@@ -209,7 +227,7 @@ class RunRobot:
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
-
+        rospy.loginfo(left_data)
         if (min_index<=25 and min_index>=15):
             return True
         else:
