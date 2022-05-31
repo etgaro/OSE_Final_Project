@@ -189,6 +189,7 @@ class RunRobot:
         # data = self.scanner.get_scan_data()
         # left_data = data[70:110]
         left_data = self.scanner.get_generated_data()
+        rospy.loginfo(left_data)
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
