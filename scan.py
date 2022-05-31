@@ -69,7 +69,7 @@ class scanner():
         data = self.get_scan_data()
         distance_between_trees = 0.7
 
-        rospy.loginfo(type(data))
+        data = list(data)
         for angle in range(0,180,1):
             if data[angle]>distance_between_trees*2:
                 data[angle] = 0
