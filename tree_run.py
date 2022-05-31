@@ -27,7 +27,7 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_straight_slow = Twist()
-        self.move_cmd_straight_slow.linear.x = 0.1
+        self.move_cmd_straight_slow.linear.x = 0.2
         self.move_cmd_straight_slow.angular.z = 0.0
 
         self.move_cmd_right = Twist()
@@ -177,7 +177,9 @@ class RunRobot:
             return "end_state", "finishhh"
 
         left_real_data = self.scanner.get_scan_data()
-        if sum(left_real_data[88:92])/5 > 0:
+        distance_from_side = sum(left_real_data[88:92]) / 5
+        if distance_from_side > 0 and distance_from_side < 1:
+            rospy.loginfo("dist from side="+distance_from_side)
             return "tree_from_side", "tree_from_side!!"
         #data = self.scanner.get_scan_data()
 
