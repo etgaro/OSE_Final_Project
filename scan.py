@@ -78,6 +78,9 @@ class scanner():
             angle_back = 180-angle_front
             dist_back = dist_front
 
+        string_print = "angle_front="+str(angle_front)+"    dist_front="+str(dist_front)+"  angle_back="+str(angle_back)+"    dist_back="+str(dist_back)
+        rospy.loginfo(string_print)
+
         return angle_front, dist_front, angle_back, dist_back
 
 
