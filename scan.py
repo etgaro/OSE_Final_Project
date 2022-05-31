@@ -36,8 +36,11 @@ class scanner():
 
         list_of_ranges = []
         for index in range(0,40):
-            if index+70 == 90:
-                x=b/m
+            if index+70 == 90: # checking the 90 degrees
+                if m==0: # parallel to trees line
+                    x= front_x
+                else:
+                    x=b/m
             else:
                 x=b/(-np.tan(np.radians(index+70))-m)
             list_of_ranges.append(abs(x/(np.sin(np.radians(index+70)))))
