@@ -62,7 +62,7 @@ class scanner():
         if step == 1 and count == 0:
             return 0
 
-        return round(sum_angles/count)
+        return int(round(sum_angles/count))
 
 
     def get_tree_angles_dist(self):
