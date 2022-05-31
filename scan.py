@@ -64,6 +64,7 @@ class scanner():
 
         return round(sum_angles/count)
 
+
     def get_tree_angles_dist(self):
         data = self.get_scan_data()
 
