@@ -161,11 +161,16 @@ class RunRobot:
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
-        data = self.scanner.get_scan_data()
+        #data = self.scanner.get_scan_data()
+
+        # data = self.scanner.get_scan_data()
+        # left_data = data[70:110]
+        left_data = scanner.get_generated_data()
+
         avg_actual_dist=0
-        for range_angle in data[85:95]:
+        for range_angle in left_data[15:25]:
             avg_actual_dist = avg_actual_dist+range_angle
-        avg_actual_dist = avg_actual_dist/len(data[85:95])
+        avg_actual_dist = avg_actual_dist/len(left_data[15:25])
         rospy.loginfo(avg_actual_dist)
         if avg_actual_dist < self.keep_from_wall_min:
            #rospy.loginfo('this is right')
@@ -181,8 +186,9 @@ class RunRobot:
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
-        data = self.scanner.get_scan_data()
-        left_data = data[70:110]
+        # data = self.scanner.get_scan_data()
+        # left_data = data[70:110]
+        left_data = scanner.get_generated_data()
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
@@ -196,8 +202,9 @@ class RunRobot:
 
     def is_parallel(self):
 
-        data = self.scanner.get_scan_data()
-        left_data = data[70:110]
+        #data = self.scanner.get_scan_data()
+        #left_data = data[70:110]
+        left_data = scanner.get_generated_data()
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)
