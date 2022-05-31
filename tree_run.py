@@ -179,7 +179,7 @@ class RunRobot:
         left_real_data = self.scanner.get_scan_data()
         distance_from_side = sum(left_real_data[88:92]) / 5
         if distance_from_side > 0 and distance_from_side < 1:
-            string_to_print = "dist from side="+distance_from_side
+            string_to_print = "dist from side="+str(distance_from_side)
             rospy.loginfo(string_to_print)
             return "tree_from_side", "tree_from_side!!"
         #data = self.scanner.get_scan_data()
