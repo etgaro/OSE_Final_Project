@@ -6,6 +6,8 @@ import rospy
 import numpy as np
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from Exceptions import NoFrontTreeError
+
 #from statistics import mean
 
 
@@ -27,7 +29,7 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_straight_slow = Twist()
-        self.move_cmd_straight_slow.linear.x = 0.2
+        self.move_cmd_straight_slow.linear.x = 0.04
         self.move_cmd_straight_slow.angular.z = 0.0
 
         self.move_cmd_right = Twist()
