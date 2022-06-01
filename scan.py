@@ -51,7 +51,10 @@ class scanner():
                     rospy.loginfo(string_to_print)
             else:
                 #x=b/(-np.tan(np.radians(index+70))-m)
-                x = (np.tan(np.radians(index+70))*b)/(1-m*np.tan(np.radians(index+70)))
+                if(index+70<90):
+                    x = (np.tan(np.radians(index+70))*b)/(1-m*np.tan(np.radians(index+70)))
+                else:
+                    x = (-np.tan(np.radians(index+70))*b)/(1+m*np.tan(np.radians(index+70)))
 
             list_of_ranges.append(abs(x/(np.sin(np.radians(index+70)))))
 
