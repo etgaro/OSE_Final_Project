@@ -51,6 +51,7 @@ class RunRobot:
         self.found_tree = False
         self.found_and_stoped = False
         self.tree_counter = 0
+        self.tree_num = 6
 
 
     def move_forward_handler(self, System_state):
