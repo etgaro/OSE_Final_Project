@@ -15,7 +15,7 @@ class scanner():
         rospy.sleep(1)
 
     def callback(self,msg):
-        print("hey")
+        #print("hey")
         self.scan=msg
 
     def get_scan_data(self):
