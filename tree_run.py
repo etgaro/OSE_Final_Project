@@ -50,6 +50,7 @@ class RunRobot:
 
         self.found_tree = False
         self.found_and_stoped = False
+        self.tree_counter = 0
 
 
     def move_forward_handler(self, System_state):
@@ -98,6 +99,13 @@ class RunRobot:
             rospy.sleep(4)
             self.cmd_vel.publish(Twist())
             self.found_and_stoped = True
+            self.tree_counter = self.tree_counter + 1
+
+            if self.tree_counter == self.tree_num:
+                self.cmd_vel.publish(self.move_cmd_right)
+                rospy.sleep(8)
+                self.cmd_vel.publish(Twist())
+                return "end_state", "found all the trees!!!!"
 
         return "move_forward", System_state, "from un_clockwise to forward"
 
