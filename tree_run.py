@@ -29,7 +29,7 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_straight_slow = Twist()
-        self.move_cmd_straight_slow.linear.x = 0.01
+        self.move_cmd_straight_slow.linear.x = 0.02
         self.move_cmd_straight_slow.angular.z = 0.0
 
         self.move_cmd_right = Twist()
