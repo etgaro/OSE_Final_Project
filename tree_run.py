@@ -93,9 +93,9 @@ class RunRobot:
 
         if self.found_and_stoped == False:
             self.cmd_vel.publish(self.move_cmd_left)
-            rospy.sleep(2)
+            rospy.sleep(4)
             self.cmd_vel.publish(self.move_cmd_right)
-            rospy.sleep(2)
+            rospy.sleep(4)
             self.cmd_vel.publish(Twist())
             self.found_and_stoped = True
 
