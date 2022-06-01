@@ -43,10 +43,16 @@ class scanner():
             if index+70 == 90: # checking the 90 degrees
                 if m==0: # parallel to trees line
                     x= front_x
+                    string_to_print = "paralel --- x= front_x = " + str(x)
+                    rospy.loginfo(string_to_print)
                 else:
                     x=b/m
+                    string_to_print = "x=b/m = "+str(x)
+                    rospy.loginfo(string_to_print)
             else:
-                x=b/(-np.tan(np.radians(index+70))-m)
+                #x=b/(-np.tan(np.radians(index+70))-m)
+                x = (np.tan(np.radians(index+70))*b)/(1-m*np.tan(np.radians(index+70)))
+
             list_of_ranges.append(abs(x/(np.sin(np.radians(index+70)))))
 
         return list_of_ranges
