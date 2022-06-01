@@ -247,6 +247,12 @@ class RunRobot:
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
+        left_data_print = [round(num, 3) for num in left_data]
+        rospy.loginfo(left_data_print)
+        string_to_print = "min_index= "+str(min_index)
+        rospy.loginfo(string_to_print)
+
+
         if (min_index<=25 and min_index>=15):
             return True
         else:
