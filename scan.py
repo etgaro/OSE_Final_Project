@@ -46,7 +46,7 @@ class scanner():
             if index+70 == 90: # checking the 90 degrees
                 if m==0: # parallel to trees line
                     x= front_x
-                    string_to_print = "paralel --- x= front_x = " + str(x)
+                    string_to_print = "paralel --- x= front_x = " + str(x) + "b="+str(b)+"front_y="+str(front_y)
                     rospy.loginfo(string_to_print)
                 else:
                     x=b/m
