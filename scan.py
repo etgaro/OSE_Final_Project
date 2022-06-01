@@ -32,6 +32,9 @@ class scanner():
         front_x, front_y = self.get_x_y_from_angle_dist(90-front_tree_angle,front_tree_dist)
         back_x, back_y = self.get_x_y_from_angle_dist(back_tree_angle-90,back_tree_dist)
 
+        front_x = abs(front_x)
+        back_x = abs(back_x)
+
         if front_x-back_x == 0:
             m=0
         else:
