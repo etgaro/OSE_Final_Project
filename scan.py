@@ -32,9 +32,9 @@ class scanner():
         front_x, front_y = self.get_x_y_from_angle_dist(90-front_tree_angle,front_tree_dist)
         back_x, back_y = self.get_x_y_from_angle_dist(back_tree_angle-90,back_tree_dist)
 
-        front_x = abs(front_x)
-        back_x = abs(back_x)
-
+        #front_x = abs(front_x)
+        #back_x = abs(back_x)
+        back_y = -back_y
         if front_x-back_x == 0:
             m=0
         else:
@@ -52,14 +52,16 @@ class scanner():
                     x=b/m
                     string_to_print = "x=b/m = "+str(x)
                     rospy.loginfo(string_to_print)
+                list_of_ranges.append(abs(x))
+
             else:
-                #x=b/(-np.tan(np.radians(index+70))-m)
-                if(index+70<90):
-                    x = (np.tan(np.radians(index+70))*b)/(1-m*np.tan(np.radians(index+70)))
-                    list_of_ranges.append(abs(x / (np.sin(np.radians(index + 70)))))
+                x=b/(np.tan(np.radians(90+index+70))-m)
+                if index+70<90:
+                 list_of_ranges.append(abs(x / (np.sin(np.radians(index + 70)))))
+                 # x = (np.tan(np.radians(index+70))*b)/(1-m*np.tan(np.radians(index+70)))
                 else:
-                    x = (-np.tan(np.radians(index+70))*b)/(1+m*np.tan(np.radians(index+70)))
-                    list_of_ranges.append(abs(x / (np.sin(np.radians(180-(index + 70))))))
+                 list_of_ranges.append(abs(x / (np.sin(np.radians(180 - (index + 70))))))
+                 # x = (-np.tan(np.radians(index+70))*b)/(1+m*np.tan(np.radians(index+70)))
 
         return list_of_ranges
 
