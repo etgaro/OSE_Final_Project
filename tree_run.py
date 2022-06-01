@@ -55,7 +55,7 @@ class RunRobot:
         if(self.is_parallel()):
 
             self.cmd_vel.publish(self.move_cmd_straight)
-            rospy.sleep(0.1)
+            rospy.sleep(0.3)
 
             newState, transition = self.adapt_distance()
 
