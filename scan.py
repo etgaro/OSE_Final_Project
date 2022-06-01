@@ -118,7 +118,12 @@ class scanner():
 
         return angle_front, dist_front, angle_back, dist_back
 
-
+    def tree_from_side(self):
+        left_real_data = self.get_scan_data()
+        distance_from_side = min(left_real_data[88:92])
+        if distance_from_side < 1 and distance_from_side>0:
+            return True
+        return False
 
 
 

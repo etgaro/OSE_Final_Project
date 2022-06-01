@@ -97,46 +97,58 @@ class RunRobot:
 
     def correctright_handler(self,System_state):
 
+        if self.scanner.tree_from_side():
+            return "tree_from_side", System_state,  "tree_from_side!!_from correct right"
+
         self.cmd_vel.publish(self.move_cmd_right)
         rospy.sleep(.2)
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+        rospy.sleep(.01)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         rospy.sleep(.05)
 
+        if self.scanner.tree_from_side():
+            return "tree_from_side", System_state,  "tree_from_side!!_from correct right"
+
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+        rospy.sleep(.01)
 
         self.cmd_vel.publish(self.move_cmd_left)
         rospy.sleep(.05)
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+        rospy.sleep(.01)
 
         return "move_forward", System_state, "from right to forward"
 
 
     def correctleft_handler(self,System_state):
 
+        if self.scanner.tree_from_side():
+            return "tree_from_side", System_state,  "tree_from_side!!_from correct left"
+
         self.cmd_vel.publish(self.move_cmd_left)
         rospy.sleep(0.2)
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+        rospy.sleep(.01)
 
         self.cmd_vel.publish(self.move_cmd_straight)
         rospy.sleep(.05)
 
+        if self.scanner.tree_from_side():
+            return "tree_from_side", System_state,  "tree_from_side!!_from correct left"
+
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+        rospy.sleep(.01)
 
         self.cmd_vel.publish(self.move_cmd_right)
         rospy.sleep(0.05)
 
         self.cmd_vel.publish(Twist())
-        rospy.sleep(.05)
+        rospy.sleep(.01)
         return "move_forward", System_state, "from left to forward"
 
     def terminate(self):
@@ -178,11 +190,7 @@ class RunRobot:
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
-        left_real_data = self.scanner.get_scan_data()
-        distance_from_side = min(left_real_data[88:92])
-        if distance_from_side > 0 and distance_from_side < 1:
-            string_to_print = "dist from side="+str(distance_from_side)
-            rospy.loginfo(string_to_print)
+        if self.scanner.tree_from_side():
             return "tree_from_side", "tree_from_side!!"
         #data = self.scanner.get_scan_data()
 
