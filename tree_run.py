@@ -42,7 +42,7 @@ class RunRobot:
 
         self.r = rospy.Rate(10)
 
-        self.keep_from_wall_max = 0.50
+        self.keep_from_wall_max = 0.30
         self.keep_from_wall_min = 0.15
 
         self.cmd_vel.publish(self.move_cmd_straight)
