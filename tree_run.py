@@ -196,9 +196,11 @@ class RunRobot:
         avg_actual_dist=0
         for range_angle in left_data[15:25]:
             avg_actual_dist = avg_actual_dist+range_angle
+
         avg_actual_dist = avg_actual_dist/len(left_data[15:25])
         string_to_print = "avg_actual_dist = "+str(avg_actual_dist)
         rospy.loginfo(string_to_print)
+
         if avg_actual_dist < self.keep_from_wall_min:
            #rospy.loginfo('this is right')
             return "correctright" , "correcting_right"
