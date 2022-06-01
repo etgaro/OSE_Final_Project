@@ -2,7 +2,7 @@ import rospy
 from sensor_msgs.msg import LaserScan
 import numpy as np
 
-class NoFrontTreeError(Error):
+class NoFrontTreeError(Exception):
     #raised when the robot is turned to the right too much
     pass
 
