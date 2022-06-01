@@ -186,7 +186,10 @@ class RunRobot:
 
         # data = self.scanner.get_scan_data()
         # left_data = data[70:110]
-        left_data = self.scanner.get_generated_data()
+        try:
+            left_data = self.scanner.get_generated_data()
+        except NoFrontTreeError:
+            return 'un_clockwise','error - correcting unclockwise'
 
         avg_actual_dist=0
         for range_angle in left_data[15:25]:
@@ -209,7 +212,11 @@ class RunRobot:
 
         # data = self.scanner.get_scan_data()
         # left_data = data[70:110]
-        left_data = self.scanner.get_generated_data()
+        try:
+            left_data = self.scanner.get_generated_data()
+        except NoFrontTreeError:
+            return 'un_clockwise','error - correcting unclockwise'
+
         rospy.loginfo(left_data)
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
@@ -226,7 +233,10 @@ class RunRobot:
 
         #data = self.scanner.get_scan_data()
         #left_data = data[70:110]
-        left_data = self.scanner.get_generated_data()
+        try:
+            left_data = self.scanner.get_generated_data()
+        except NoFrontTreeError:
+            return False
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
         rospy.loginfo(min_index)

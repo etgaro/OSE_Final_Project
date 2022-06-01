@@ -2,6 +2,9 @@ import rospy
 from sensor_msgs.msg import LaserScan
 import numpy as np
 
+class NoFrontTreeError(Error):
+    #raised when the robot is turned to the right too much
+    pass
 
 class scanner():
     def __init__(self):
@@ -70,8 +73,10 @@ class scanner():
                 count = count + 1
         if step == 1 and count == 0:
             return 0
-
-        return int(round(sum_angles/count))
+        try:
+            return int(round(sum_angles/count))
+        except ZeroDivisionError:
+            raise NoFrontTreeError
 
 
     def get_tree_angles_dist(self):
