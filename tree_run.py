@@ -92,8 +92,11 @@ class RunRobot:
     def tree_from_side_handler(self, System_state):
 
         if self.found_and_stoped == False:
-            self.cmd_vel.publish(Twist())
+            self.cmd_vel.publish(self.move_cmd_left)
             rospy.sleep(1)
+            self.cmd_vel.publish(self.move_cmd_right)
+            rospy.sleep(1)
+            self.cmd_vel.publish(Twist())
             self.found_and_stoped = True
 
         return "move_forward", System_state, "from un_clockwise to forward"
