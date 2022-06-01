@@ -48,6 +48,9 @@ class RunRobot:
         self.cmd_vel.publish(self.move_cmd_straight)
         # wait for 0.1 seconds (10 HZ) and publish again
 
+        self.found_tree = False
+        self.found_and_stoped = False
+
 
     def move_forward_handler(self, System_state):
 
@@ -88,17 +91,28 @@ class RunRobot:
 
     def tree_from_side_handler(self, System_state):
 
-        self.cmd_vel.publish(self.move_cmd_straight_slow)
-        self.r.sleep()
+        if self.found_and_stoped == False:
+            self.cmd_vel.publish(Twist())
+            rospy.sleep(1)
+            self.found_and_stoped = True
 
-        newState, transition = self.adapt_distance()
+        return "move_forward", System_state, "from un_clockwise to forward"
 
-        return newState, System_state, transition
+        #
+        # self.cmd_vel.publish(self.move_cmd_straight_slow)
+        # self.r.sleep()
+
+        # newState, transition = self.adapt_distance()
+        #
+        # return newState, System_state, transition
 
     def correctright_handler(self,System_state):
 
         if self.scanner.tree_from_side():
             return "tree_from_side", System_state,  "tree_from_side!!_from correct right"
+
+        else:
+            self.found_and_stoped = False
 
         self.cmd_vel.publish(self.move_cmd_right)
         rospy.sleep(.2)
@@ -111,6 +125,8 @@ class RunRobot:
 
         if self.scanner.tree_from_side():
             return "tree_from_side", System_state,  "tree_from_side!!_from correct right"
+        else:
+            self.found_and_stoped = False
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.01)
@@ -128,6 +144,8 @@ class RunRobot:
 
         if self.scanner.tree_from_side():
             return "tree_from_side", System_state,  "tree_from_side!!_from correct left"
+        else:
+            self.found_and_stoped = False
 
         self.cmd_vel.publish(self.move_cmd_left)
         rospy.sleep(0.2)
@@ -140,6 +158,9 @@ class RunRobot:
 
         if self.scanner.tree_from_side():
             return "tree_from_side", System_state,  "tree_from_side!!_from correct left"
+
+        else:
+            self.found_and_stoped = False
 
         self.cmd_vel.publish(Twist())
         rospy.sleep(.01)
@@ -192,6 +213,8 @@ class RunRobot:
 
         if self.scanner.tree_from_side():
             return "tree_from_side", "tree_from_side!!"
+        else:
+            self.found_and_stoped = False
         #data = self.scanner.get_scan_data()
 
         # data = self.scanner.get_scan_data()
