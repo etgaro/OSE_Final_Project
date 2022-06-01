@@ -29,7 +29,7 @@ class RunRobot:
         self.move_cmd_straight.angular.z = 0.0
 
         self.move_cmd_straight_slow = Twist()
-        self.move_cmd_straight_slow.linear.x = 0.04
+        self.move_cmd_straight_slow.linear.x = 0.01
         self.move_cmd_straight_slow.angular.z = 0.0
 
         self.move_cmd_right = Twist()
@@ -55,7 +55,7 @@ class RunRobot:
         if(self.is_parallel()):
 
             self.cmd_vel.publish(self.move_cmd_straight)
-            rospy.sleep(0.5)
+            rospy.sleep(0.1)
 
             newState, transition = self.adapt_distance()
 
