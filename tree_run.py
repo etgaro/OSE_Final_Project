@@ -1,3 +1,5 @@
+#imports
+
 from State_Machine import StateMachine
 from scan import scanner
 from random import random
@@ -8,10 +10,7 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from Exceptions import NoFrontTreeError
 
-#from statistics import mean
-
-
-
+# Navigation Algorithm using Machine State
 class RunRobot:
     def __init__(self):
         # initialize
@@ -24,40 +23,39 @@ class RunRobot:
         self.cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.scanner = scanner()
 
+        # move Straight command
         self.move_cmd_straight = Twist()
         self.move_cmd_straight.linear.x = 0.3
         self.move_cmd_straight.angular.z = 0.0
 
-        self.move_cmd_straight_slow = Twist()
-        self.move_cmd_straight_slow.linear.x = 0.02
-        self.move_cmd_straight_slow.angular.z = 0.0
-
+        # right command for corrections
         self.move_cmd_right = Twist()
         self.move_cmd_right.linear.x = 0
         self.move_cmd_right.angular.z = -0.4
 
+        # left command for corrections
         self.move_cmd_left = Twist()
         self.move_cmd_left.linear.x = 0
         self.move_cmd_left.angular.z = 0.4
 
+        # number of ros commands in 1 sec
         self.r = rospy.Rate(10)
 
-        self.keep_from_wall_max = 0.45
-        self.keep_from_wall_min = 0.20
+        # parameters for keeping distance
+        self.keep_from_wall_max = 0.40
+        self.keep_from_wall_min = 0.25
 
         self.cmd_vel.publish(self.move_cmd_straight)
-        # wait for 0.1 seconds (10 HZ) and publish again
 
         self.found_tree = False
         self.found_and_stoped = False
         self.tree_counter = 0
-        self.tree_num = 6
+        self.tree_num = 6 #number of trees in row to sample
 
 
     def move_forward_handler(self, System_state):
 
-        # publish command and wait for 0.1 seconds (10 HZ)
-        if(self.is_parallel()):
+        if(self.is_parallel()): #checking if Parallel
 
             self.cmd_vel.publish(self.move_cmd_straight)
             rospy.sleep(0.3)
@@ -66,7 +64,7 @@ class RunRobot:
 
             return newState, System_state, transition
 
-        else:
+        else: #Not parallel - correct
 
             newState, transition = self.adapt_angle()
 
@@ -91,6 +89,7 @@ class RunRobot:
 
         return "move_forward", System_state, "from un_clockwise to forward"
 
+    # Hander for State when the robot find tree from his side
     def tree_from_side_handler(self, System_state):
 
         if self.found_and_stoped == False:
@@ -110,14 +109,7 @@ class RunRobot:
 
         return "move_forward", System_state, "from un_clockwise to forward"
 
-        #
-        # self.cmd_vel.publish(self.move_cmd_straight_slow)
-        # self.r.sleep()
-
-        # newState, transition = self.adapt_distance()
-        #
-        # return newState, System_state, transition
-
+    # adapt the distance from the row
     def correctright_handler(self,System_state):
 
         if self.scanner.tree_from_side():
@@ -151,7 +143,7 @@ class RunRobot:
 
         return "move_forward", System_state, "from right to forward"
 
-
+    # adapt the distance from the row
     def correctleft_handler(self,System_state):
 
         if self.scanner.tree_from_side():
@@ -184,6 +176,7 @@ class RunRobot:
         rospy.sleep(.01)
         return "move_forward", System_state, "from left to forward"
 
+    # what to do when terminate
     def terminate(self):
         # stop turtlebot
         rospy.loginfo("Stop TurtleBot")
@@ -195,6 +188,7 @@ class RunRobot:
         rospy.loginfo("\r Done")
         return "End_State", ""
 
+    #initialyze State machine for navigation robot
     def start_the_plan(self):
 
         m = StateMachine()
@@ -216,6 +210,7 @@ class RunRobot:
 
         m.run(system_state)
 
+    # adapt distance return the state where need to correct right/left or keep forward
     def adapt_distance(self):
         '''return the next state to go to'''
 
@@ -227,49 +222,55 @@ class RunRobot:
             return "tree_from_side", "tree_from_side!!"
         else:
             self.found_and_stoped = False
-        #data = self.scanner.get_scan_data()
 
-        # data = self.scanner.get_scan_data()
-        # left_data = data[70:110]
+        #catching an error when cant find tree in front
         try:
             left_data = self.scanner.get_generated_data()
         except NoFrontTreeError:
             return 'un_clockwise','error - correcting unclockwise'
 
+        #calculating the avg distance from side
         avg_actual_dist=0
         for range_angle in left_data[15:25]:
             avg_actual_dist = avg_actual_dist+range_angle
 
         avg_actual_dist = avg_actual_dist/len(left_data[15:25])
+
+        #log for understanding what happend
         string_to_print = "avg_actual_dist = "+str(avg_actual_dist)
         rospy.loginfo(string_to_print)
 
         if avg_actual_dist < self.keep_from_wall_min:
-           #rospy.loginfo('this is right')
             return "correctright" , "correcting_right"
+
         elif avg_actual_dist > self.keep_from_wall_max:
-            #rospy.loginfo('this is left')
             return "correctleft", "correcting_left"
+
         else:
-            #rospy.loginfo('this is forward')
             return "move_forward", "moving_forward"
 
+    # adapt angle - meanning the robot is not parallel to line of trees detected
     def adapt_angle(self):
+
+        #if CTRL+C is pressed - end state
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
-        # data = self.scanner.get_scan_data()
-        # left_data = data[70:110]
+        #catching an error when cant find tree in front
         try:
             left_data = self.scanner.get_generated_data()
         except NoFrontTreeError:
             return 'un_clockwise','error - correcting unclockwise'
 
+        #log for understanding what happend
         left_data_print = [round(num, 3) for num in left_data]
-
         rospy.loginfo(left_data_print)
+
+        # what is the angle which distance is minimal
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
+
+        #log for understanding what happend
         string_to_print = "min_index= "+str(min_index)
         rospy.loginfo(string_to_print)
 
