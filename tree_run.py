@@ -188,27 +188,6 @@ class RunRobot:
         rospy.loginfo("\r Done")
         return "End_State", ""
 
-    #initialyze State machine for navigation robot
-    def start_the_plan(self):
-
-        m = StateMachine()
-        #hell0
-        rospy.loginfo('starting_the_plan')
-
-        m.add_state("move_forward", self.move_forward_handler)
-        m.add_state("correctright", self.correctright_handler)
-        m.add_state("correctleft", self.correctleft_handler)
-        m.add_state('clockwise',self.correct_clockwise)
-        m.add_state('un_clockwise', self.correct_un_clockwise)
-        m.add_state('tree_from_side', self.tree_from_side_handler)
-
-
-        m.add_state("End_state", self.terminate, end_state=1)
-        m.set_start("move_forward")
-
-        system_state = [4]  # first argument for number of cycles(*2), second for delay variable
-
-        m.run(system_state)
 
     # adapt distance return the state where need to correct right/left or keep forward
     def adapt_distance(self):
@@ -303,6 +282,28 @@ class RunRobot:
             return True
         else:
             return  False
+
+    #initialyze State machine for navigation robot
+    def start_the_plan(self):
+
+        m = StateMachine()
+        rospy.loginfo('starting_the_plan')
+
+        m.add_state("move_forward", self.move_forward_handler)
+        m.add_state("correctright", self.correctright_handler)
+        m.add_state("correctleft", self.correctleft_handler)
+        m.add_state('clockwise',self.correct_clockwise)
+        m.add_state('un_clockwise', self.correct_un_clockwise)
+        m.add_state('tree_from_side', self.tree_from_side_handler)
+
+
+        m.add_state("End_state", self.terminate, end_state=1)
+        m.set_start("move_forward")
+
+        system_state = [4]  # first argument for number of cycles(*2), second for delay variable
+
+        m.run(system_state)
+
 
 if __name__ == '__main__':
     rospy.init_node('turtle_in_field', anonymous=False)
