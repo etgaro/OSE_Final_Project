@@ -8,7 +8,7 @@
 
 ##Other files:
 -run.py - for keeping distance from wall\
--others - testing and understanding the enviorment and code
+-others - testing and understanding the environment and code
 
 ##How to start the robot:
 

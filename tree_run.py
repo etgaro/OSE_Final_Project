@@ -64,7 +64,7 @@ class RunRobot:
 
             return newState, System_state, transition
 
-        else: #Not parallel - correct
+        else: #Not parallel --> need to correct position
 
             newState, transition = self.adapt_angle()
 
@@ -89,7 +89,7 @@ class RunRobot:
 
         return "move_forward", System_state, "from un_clockwise to forward"
 
-    # Hander for State when the robot find tree from his side
+    # Handler for State when the robot found tree from his side
     def tree_from_side_handler(self, System_state):
 
         if self.found_and_stoped == False:
@@ -215,7 +215,7 @@ class RunRobot:
 
         avg_actual_dist = avg_actual_dist/len(left_data[15:25])
 
-        #log for understanding what happend
+        #log for understanding what happened
         string_to_print = "avg_actual_dist = "+str(avg_actual_dist)
         rospy.loginfo(string_to_print)
 
@@ -228,20 +228,20 @@ class RunRobot:
         else:
             return "move_forward", "moving_forward"
 
-    # adapt angle - meanning the robot is not parallel to line of trees detected
+    # adapt angle - meaning the robot is not parallel to line of trees detected
     def adapt_angle(self):
 
         #if CTRL+C is pressed - end state
         if rospy.is_shutdown():
             return "end_state", "finishhh"
 
-        #catching an error when cant find tree in front
+        #catching an error when can't find tree in front
         try:
             left_data = self.scanner.get_generated_data()
         except NoFrontTreeError:
             return 'un_clockwise','error - correcting unclockwise'
 
-        #log for understanding what happend
+        #log for understanding what happened
         left_data_print = [round(num, 3) for num in left_data]
         rospy.loginfo(left_data_print)
 
@@ -249,7 +249,7 @@ class RunRobot:
         min_value = np.min(left_data)
         min_index = left_data.index(min_value)
 
-        #log for understanding what happend
+        #log for understanding what happened
         string_to_print = "min_index= "+str(min_index)
         rospy.loginfo(string_to_print)
 
@@ -277,12 +277,12 @@ class RunRobot:
         rospy.loginfo(string_to_print)
 
 
-        if (min_index<=25 and min_index>=15):
+        if min_index<=25 and min_index>=15:
             return True
         else:
             return  False
 
-    #initialyze State machine for navigation robot
+    #initialize State machine for navigation robot
     def start_the_plan(self):
 
         m = StateMachine()
