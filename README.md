@@ -1,7 +1,16 @@
 # OSE_Final_Project
-Autonomous navigation for agriculture robot
+**Autonomous navigation for agriculture robot**
 
-how to start the robot:
+##Relevant files for navigation in line of trees:
+###-tree_run.py
+###-scan.py
+###-State_machine.py
+
+##Other files:
+-run.py - for keeping distance from wall\
+-others - testing and understanding the enviorment and code
+
+##How to start the robot:
 
 1. make sure the turtlebot and PC are using the same wifi
 2. open terminal and get updated ip address (ifconfig)
@@ -22,7 +31,7 @@ how to start the robot:
 - rviz - tool for visualizing the info from the sensors - Lidar and camera. could (and should) be open on PC since it is only reading.
 - connect to turtle files from PC using network locations or something like that.
 
-How to start the simulation:
+###How to start the simulation:
 
 1. open gazebo: ~/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/launch$ roslaunch turtlebot3_world.launch
 2. open rviz: ~/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/launch$ roslaunch turtlebot3_gazebo_rviz.launch
