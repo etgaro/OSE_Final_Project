@@ -260,10 +260,9 @@ class RunRobot:
         else:
             return "move_forward", "moving_forward"
 
+    # check if the robot is parallel to line of trees
     def is_parallel(self):
 
-        #data = self.scanner.get_scan_data()
-        #left_data = data[70:110]
         try:
             left_data = self.scanner.get_generated_data()
         except NoFrontTreeError:
@@ -307,10 +306,5 @@ class RunRobot:
 
 if __name__ == '__main__':
     rospy.init_node('turtle_in_field', anonymous=False)
-    rospy.loginfo('Main')
     robot = RunRobot()
-    rospy.loginfo('robotrunned')
-
-
     robot.start_the_plan()
-    robot.move_forward_handler()
