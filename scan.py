@@ -98,7 +98,7 @@ class scanner():
 
     def get_tree_angles_dist(self):
         data = self.get_scan_data()
-        distance_between_trees = 0.6
+        distance_between_trees = 1.5
 
         data = list(data)
         for angle in range(0,180,1):
