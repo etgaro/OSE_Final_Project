@@ -42,8 +42,8 @@ class RunRobot:
         self.r = rospy.Rate(10)
 
         # parameters for keeping distance
-        self.keep_from_wall_max = 0.25
-        self.keep_from_wall_min = 0.10
+        self.keep_from_wall_max = 0.40
+        self.keep_from_wall_min = 0.25
 
         self.cmd_vel.publish(self.move_cmd_straight)
 
