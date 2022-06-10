@@ -102,7 +102,7 @@ class scanner():
 
         data = list(data)
         for angle in range(0,180,1):
-            if data[angle]>distance_between_trees*1.5:
+            if data[angle]>distance_between_trees*2:
                 data[angle] = 0
 
         angle_front = self.get_avg_angle(data, 70, 0, -1)
