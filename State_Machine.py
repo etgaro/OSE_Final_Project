@@ -1,7 +1,7 @@
 import time
 import rospy
 
-
+# this is a basic state machine format
 class StateMachine:
 
     def __init__(self):
