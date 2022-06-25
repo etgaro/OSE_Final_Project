@@ -6,7 +6,6 @@ import rospy
 import numpy as np
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
-#from statistics import mean
 
 
 
